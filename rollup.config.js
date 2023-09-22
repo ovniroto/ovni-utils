@@ -4,7 +4,7 @@ const terser = require('@rollup/plugin-terser');
 const pkg = require('./package.json');
 
 const dist = 'dist'
-const bundleName = 'bundle'
+const bundleName = 'ovniutils'
 
 const banner = '/*\n'
 	+ ' *\n'

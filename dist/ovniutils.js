@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.1.0
+ *  OvniUtils v0.1.1
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
@@ -11,12 +11,12 @@
 /**
  * Checks if a date timestamp has expired relative to the current date.
  *
- * @param {number} time Time in milliseconds
+ * @param {number} timestamp Time in milliseconds
  * @return {Boolean} boolean
  * @example OU.isTimestampExpired(1695371156) // Return true
  */
-const isTimestampExpired = (time) => {
-    return Date.now() > time;
+const isTimestampExpired = (timestamp) => {
+    return Date.now() > timestamp;
 };
 
 /**
