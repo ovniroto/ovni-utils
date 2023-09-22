@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es6",
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "noEmitOnError": true,
         "lib": ["es6"],
         "strict": true,  
@@ -12,5 +12,9 @@
     },
     "include": [
         "./src/**/*.ts"
+    ],
+    "exclude": [
+        "./src/index.ts",
+        "./node_modules/**/*"
     ]
 }

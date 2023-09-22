@@ -1,6 +1,6 @@
 {
     "name": "ovni-utils",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Specific useful functions.",
     "keywords": [
         "ovni",
@@ -31,8 +31,10 @@
         "dist"
     ],
     "scripts": {
-        "prepare": "npm run clean && npm run build",
+        "prepare": "npm run clean && npm run setup && npm run build && npm run clean:bundle",
+        "setup": "node ./build/setup.js",
         "clean": "rimraf dist",
+        "clean:bundle": "rimraf src/bundle.ts",
         "build": "npm-run-all build:**",
         "build:umd": "cross-env NODE_ENV=development rollup -c --bundleConfigAsCjs",
         "build:umd:min": "cross-env NODE_ENV=production rollup -c --bundleConfigAsCjs"
