@@ -7,11 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['20','16']
+        node: ['20']
     name: Node ${{ matrix.node }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Installing Dependencies
+        run: npm ci
 
       - name: Building Artefacts
         run: npm run prepare
