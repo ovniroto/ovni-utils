@@ -10,7 +10,7 @@ readFile(file, 'utf8', (err, data) => {
 
     writeFile(newFile, modifiedData, 'utf8', (err) => {
         if(err) { console.error(err); return; }
-        console.log('Done!');
+        console.log('Bundle file created!');
     });
 
 });

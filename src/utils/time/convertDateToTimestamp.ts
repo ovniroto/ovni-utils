@@ -15,9 +15,8 @@ const convertDateToTimestamp = (datetime: string): number => {
 
     if(datetime.includes(" ")) {
 
-        let [ d, t ] = datetime.split(" ") as string[]
-
-        let time = t.split(":") as unknown as string[]
+        const [ d, t ] = datetime.split(" ") as string[]
+        const time = t.split(":") as unknown as string[]
 
         if(datetime.includes('-')) date = d.split('-') as unknown as string[]
         if(datetime.includes('/')) date = d.split('/') as unknown as string[]

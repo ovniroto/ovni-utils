@@ -37,13 +37,7 @@ if(process.env.NODE_ENV === 'production') {
 		banner: banner,
 	}
 	config.plugins.push(
-		terser({
-			compress: {
-				pure_getters: true,
-				unsafe: true,
-				unsafe_comps: true
-			}
-		})
+		terser({})
 	);
 }
 
