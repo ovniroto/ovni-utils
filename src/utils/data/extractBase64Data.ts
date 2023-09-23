@@ -1,9 +1,9 @@
 /**
  * Extract information of base64 file data
  *
- * @param {string} base64 - base64 data file
- * @return {object} { type: string, extension: string, data: string }
- * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...")
+ * @param {string} base64 `string` - base64 file data
+ * @return {object} `object` { type: string, extension: string, data: string }
+ * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...") // Return { type: 'jpg', extension: 'jpg', data: '/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...' }
  */
 const extractBase64Data = (base64: string): { type: string, extension: string, data: string } => {
 

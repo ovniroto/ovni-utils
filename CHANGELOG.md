@@ -1,5 +1,13 @@
 # Changelog
 
+### 0.2.0
+
+Release 23 sep 2023
+  * Add [`generateCode`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#generateCode) to generators related utils
+  * Add [`generateId`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#generateId) to generators related utils
+  * Add [`generateNumberBetween`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#generateNumberBetween) to generators related utils
+  * Add [`convertTextToSlug`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertTextToSlug) to converters related utils
+
 ### 0.1.3
 
 Release 23 sep 2023

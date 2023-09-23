@@ -1,4 +1,4 @@
-# OvniUtils v0.1
+# OvniUtils v0.2
 
 ![GitHub issues](https://img.shields.io/github/issues/ovniroto/ovniutils)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/ovniroto/ovniutils/build.yml)

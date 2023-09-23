@@ -1,8 +1,8 @@
 /**
  * Convert date to timestamp
  *
- * @param {string} datetime Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
- * @return {number} number
+ * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
+ * @return {number} timestamp `number`
  * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
  */
 const convertDateToTimestamp = (datetime: string): number => {

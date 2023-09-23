@@ -1,10 +1,10 @@
 /**
- * Convert timestamp to time
+ * Convert timestamp to date
  *
  * @param {number} timestamp `number` Example: 1695398400
  * @param {string} separator `string` Example: "/"
  * @param {boolean} includeTime `boolean` Example: true
- * @return {string} `string` Example: "22/09/2023 18:00"
+ * @return {string} date `string` Example: "22/09/2023 18:00"
  * @example OU.convertTimestampToDate(1695398400) // Return "22/09/2023 18:00"
  */
 const convertTimestampToDate = (timestamp: number, separator = "-", includeTime = false): string => {

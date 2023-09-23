@@ -1,12 +1,12 @@
 /**
- * Checks if a date timestamp has expired relative to the current date.
+ * Checks if a unix timestamp has expired relative to the current date.
  *
- * @param {number} timestamp Time in milliseconds
- * @return {Boolean} boolean
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @return {boolean} true/false `boolean`
  * @example OU.isTimestampExpired(1695371156) // Return true
  */
-const isTimestampExpired = (timestamp: number): Boolean => {
-    return Date.now() > timestamp
+const isTimestampExpired = (timestamp: number): boolean => {
+    return Math.floor(Date.now() / 1000) > timestamp
 }
 
 export default isTimestampExpired

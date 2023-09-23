@@ -1,5 +1,6 @@
 const typescript = require('@rollup/plugin-typescript');
 const terser = require('@rollup/plugin-terser');
+const nodeResolve = require('@rollup/plugin-node-resolve');
 const pkg = require('./package.json');
 
 const dist = 'dist'
@@ -24,6 +25,7 @@ const config = {
 			banner: banner,
 	},
 	plugins: [
+		nodeResolve({}),
 		typescript({
 			tsconfig: './tsconfig.json'
 		})
@@ -36,9 +38,10 @@ if(process.env.NODE_ENV === 'production') {
 		format: 'cjs',
 		banner: banner,
 	}
-	config.plugins.push(
-		terser({})
-	);
+	config.plugins.push(nodeResolve({
+		browser: true
+	}));
+	config.plugins.push(terser({}));
 }
 
 export default config;
