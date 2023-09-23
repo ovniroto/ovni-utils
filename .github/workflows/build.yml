@@ -5,16 +5,21 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ['20','16']
-    name: Node ${{ matrix.node }}
+    name: Build Artifacts
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Installing Dependencies
+      - name: ⏬ Checkout
+        uses: actions/checkout@v2.1.1
+      - name: 📦 Node
+        uses: actions/setup-node@v1.4.2
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org
+      - name: 📂 Installing Dependencies
         run: npm ci
-
-      - name: Building Artefacts
+      - name: 📦 Building Artifacts
         run: npm run build
+      - name: ⏫ Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-build
+          path: dist/
