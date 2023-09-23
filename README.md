@@ -1,7 +1,6 @@
 # OvniUtils v0.2
 
 ![GitHub issues](https://img.shields.io/github/issues/ovniroto/ovniutils)
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/ovniroto/ovniutils/build.yml)
 [![tag](https://img.shields.io/github/tag/ovniroto/ovniutils.svg)](https://github.com/ovniroto/ovni-utils/tags)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/ovniroto/ovniutils)
 ![GitHub License](https://img.shields.io/github/license/ovniroto/ovniutils)
