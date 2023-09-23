@@ -32,13 +32,11 @@
         "dist"
     ],
     "scripts": {
-        "build": "npm run clean && npm run setup && npm run bundle",
-        "setup": "node ./build/setup.js",
+        "build": "npm run clean && npm run bundle",
         "clean": "rimraf dist",
         "bundle": "npm-run-all bundle:**",
-        "bundle:umd": "cross-env NODE_ENV=development rollup -c --bundleConfigAsCjs",
-        "bundle:umd:min": "cross-env NODE_ENV=production rollup -c --bundleConfigAsCjs",
-        "bundle:clean": "rimraf src/bundle.ts"
+        "bundle:umd": "rollup -c --bundleConfigAsCjs",
+        "bundle:umd:min": "cross-env NODE_ENV=minify rollup -c --bundleConfigAsCjs"
     },
     "devDependencies": {
         "@rollup/plugin-babel": "^6.0.3",

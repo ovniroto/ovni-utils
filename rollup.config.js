@@ -18,7 +18,7 @@ const banner = '/*\n'
 
 
 const config = {
-	input: './src/bundle.ts',
+	input: './src/index.ts',
 	output: {
 			file: `${dist}/${bundleName}.js`,
 			format: 'esm',
@@ -32,7 +32,7 @@ const config = {
 	]
 }
 
-if(process.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV === 'minify') {
 	config.output = {
 		file: `${dist}/${bundleName}.min.js`,
 		format: 'cjs',

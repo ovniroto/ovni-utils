@@ -22,7 +22,7 @@ Browser:
 
 Deno:
 ```js
-import * as OU from 'https://deno.land/x/ovniutils@v0.1.0/mod.ts'
+import * as OU from 'https://esm.sh/ovni-utils@0.2.0'
 ```
 
 Node:
