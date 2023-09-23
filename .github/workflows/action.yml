@@ -33,5 +33,3 @@ jobs:
           name: production-build
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          add: 'dist'
