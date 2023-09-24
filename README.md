@@ -37,6 +37,6 @@ import * as OU from 'ovni-utils'
 ### Change language
 Some functions can return text. You can change the language of that text by config.
 ```js
-OU.setConfig({ language: 'es-ES' }) // Valid languages: es-ES, en-US, fr-FR (default: en-US)
+OU.setConfig({ language: 'es-ES' }) // Valid languages: es-ES, en-US (default: en-US)
 OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Viernes, Septiembre 22, 2023, 10:25:56 AM"
 ```
