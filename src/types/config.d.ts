@@ -1,0 +1,1 @@
+type Config = { language: Lang }

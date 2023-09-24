@@ -1,4 +1,4 @@
-# OvniUtils v0.2
+# OvniUtils v0.3
 
 ![GitHub issues](https://img.shields.io/github/issues/ovniroto/ovniutils)
 [![tag](https://img.shields.io/github/tag/ovniroto/ovniutils.svg)](https://github.com/ovniroto/ovni-utils/tags)
@@ -21,7 +21,7 @@ Browser:
 
 Deno:
 ```js
-import * as OU from 'https://esm.sh/ovni-utils@0.2.0'
+import * as OU from 'https://esm.sh/ovni-utils@0.3.0'
 ```
 
 Node:
@@ -30,4 +30,13 @@ $ npm i ovni-utils
 ```
 ```js
 import * as OU from 'ovni-utils'
+```
+
+## Configuration
+
+### Change language
+Some functions can return text. You can change the language of that text by config.
+```js
+OU.setConfig({ language: 'es-ES' }) // Valid languages: es-ES, en-US, fr-FR (default: en-US)
+OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Viernes, Septiembre 22, 2023, 10:25:56 AM"
 ```

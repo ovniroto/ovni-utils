@@ -1,12 +1,56 @@
 /*
  *
- *  OvniUtils v0.2.0
+ *  OvniUtils v0.3.0
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
  *  OvniUtils may be freely distributed under the MIT license.
  *
 */
+
+var token=/d{1,4}|D{3,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|W{1,2}|[LlopSZN]|"[^"]*"|'[^']*'/g;var timezone=/\b(?:[A-Z]{1,3}[A-Z][TC])(?:[-+]\d{4})?|((?:Australian )?(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time)\b/g;var timezoneClip=/[^-+\dA-Z]/g;function dateFormat(date,mask,utc,gmt){if(arguments.length===1&&typeof date==="string"&&!/\d/.test(date)){mask=date;date=undefined;}date=date||date===0?date:new Date;if(!(date instanceof Date)){date=new Date(date);}if(isNaN(date)){throw TypeError("Invalid date")}mask=String(masks[mask]||mask||masks["default"]);var maskSlice=mask.slice(0,4);if(maskSlice==="UTC:"||maskSlice==="GMT:"){mask=mask.slice(4);utc=true;if(maskSlice==="GMT:"){gmt=true;}}var _=function _(){return utc?"getUTC":"get"};var _d=function d(){return date[_()+"Date"]()};var D=function D(){return date[_()+"Day"]()};var _m=function m(){return date[_()+"Month"]()};var y=function y(){return date[_()+"FullYear"]()};var _H=function H(){return date[_()+"Hours"]()};var _M=function M(){return date[_()+"Minutes"]()};var _s=function s(){return date[_()+"Seconds"]()};var _L=function L(){return date[_()+"Milliseconds"]()};var _o=function o(){return utc?0:date.getTimezoneOffset()};var _W=function W(){return getWeek(date)};var _N=function N(){return getDayOfWeek(date)};var flags={d:function d(){return _d()},dd:function dd(){return pad(_d())},ddd:function ddd(){return i18n.dayNames[D()]},DDD:function DDD(){return getDayName({y:y(),m:_m(),d:_d(),_:_(),dayName:i18n.dayNames[D()],short:true})},dddd:function dddd(){return i18n.dayNames[D()+7]},DDDD:function DDDD(){return getDayName({y:y(),m:_m(),d:_d(),_:_(),dayName:i18n.dayNames[D()+7]})},m:function m(){return _m()+1},mm:function mm(){return pad(_m()+1)},mmm:function mmm(){return i18n.monthNames[_m()]},mmmm:function mmmm(){return i18n.monthNames[_m()+12]},yy:function yy(){return String(y()).slice(2)},yyyy:function yyyy(){return pad(y(),4)},h:function h(){return _H()%12||12},hh:function hh(){return pad(_H()%12||12)},H:function H(){return _H()},HH:function HH(){return pad(_H())},M:function M(){return _M()},MM:function MM(){return pad(_M())},s:function s(){return _s()},ss:function ss(){return pad(_s())},l:function l(){return pad(_L(),3)},L:function L(){return pad(Math.floor(_L()/10))},t:function t(){return _H()<12?i18n.timeNames[0]:i18n.timeNames[1]},tt:function tt(){return _H()<12?i18n.timeNames[2]:i18n.timeNames[3]},T:function T(){return _H()<12?i18n.timeNames[4]:i18n.timeNames[5]},TT:function TT(){return _H()<12?i18n.timeNames[6]:i18n.timeNames[7]},Z:function Z(){return gmt?"GMT":utc?"UTC":formatTimezone(date)},o:function o(){return (_o()>0?"-":"+")+pad(Math.floor(Math.abs(_o())/60)*100+Math.abs(_o())%60,4)},p:function p(){return (_o()>0?"-":"+")+pad(Math.floor(Math.abs(_o())/60),2)+":"+pad(Math.floor(Math.abs(_o())%60),2)},S:function S(){return ["th","st","nd","rd"][_d()%10>3?0:(_d()%100-_d()%10!=10)*_d()%10]},W:function W(){return _W()},WW:function WW(){return pad(_W())},N:function N(){return _N()}};return mask.replace(token,function(match){if(match in flags){return flags[match]()}return match.slice(1,match.length-1)})}var masks={default:"ddd mmm dd yyyy HH:MM:ss",shortDate:"m/d/yy",paddedShortDate:"mm/dd/yyyy",mediumDate:"mmm d, yyyy",longDate:"mmmm d, yyyy",fullDate:"dddd, mmmm d, yyyy",shortTime:"h:MM TT",mediumTime:"h:MM:ss TT",longTime:"h:MM:ss TT Z",isoDate:"yyyy-mm-dd",isoTime:"HH:MM:ss",isoDateTime:"yyyy-mm-dd'T'HH:MM:sso",isoUtcDateTime:"UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",expiresHeaderFormat:"ddd, dd mmm yyyy HH:MM:ss Z"};var i18n={dayNames:["Sun","Mon","Tue","Wed","Thu","Fri","Sat","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],monthNames:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","January","February","March","April","May","June","July","August","September","October","November","December"],timeNames:["a","p","am","pm","A","P","AM","PM"]};var pad=function pad(val){var len=arguments.length>1&&arguments[1]!==undefined?arguments[1]:2;return String(val).padStart(len,"0")};var getDayName=function getDayName(_ref){var y=_ref.y,m=_ref.m,d=_ref.d,_=_ref._,dayName=_ref.dayName,_ref$short=_ref["short"],_short=_ref$short===void 0?false:_ref$short;var today=new Date;var yesterday=new Date;yesterday.setDate(yesterday[_+"Date"]()-1);var tomorrow=new Date;tomorrow.setDate(tomorrow[_+"Date"]()+1);var today_d=function today_d(){return today[_+"Date"]()};var today_m=function today_m(){return today[_+"Month"]()};var today_y=function today_y(){return today[_+"FullYear"]()};var yesterday_d=function yesterday_d(){return yesterday[_+"Date"]()};var yesterday_m=function yesterday_m(){return yesterday[_+"Month"]()};var yesterday_y=function yesterday_y(){return yesterday[_+"FullYear"]()};var tomorrow_d=function tomorrow_d(){return tomorrow[_+"Date"]()};var tomorrow_m=function tomorrow_m(){return tomorrow[_+"Month"]()};var tomorrow_y=function tomorrow_y(){return tomorrow[_+"FullYear"]()};if(today_y()===y&&today_m()===m&&today_d()===d){return _short?"Tdy":"Today"}else if(yesterday_y()===y&&yesterday_m()===m&&yesterday_d()===d){return _short?"Ysd":"Yesterday"}else if(tomorrow_y()===y&&tomorrow_m()===m&&tomorrow_d()===d){return _short?"Tmw":"Tomorrow"}return dayName};var getWeek=function getWeek(date){var targetThursday=new Date(date.getFullYear(),date.getMonth(),date.getDate());targetThursday.setDate(targetThursday.getDate()-(targetThursday.getDay()+6)%7+3);var firstThursday=new Date(targetThursday.getFullYear(),0,4);firstThursday.setDate(firstThursday.getDate()-(firstThursday.getDay()+6)%7+3);var ds=targetThursday.getTimezoneOffset()-firstThursday.getTimezoneOffset();targetThursday.setHours(targetThursday.getHours()-ds);var weekDiff=(targetThursday-firstThursday)/(864e5*7);return 1+Math.floor(weekDiff)};var getDayOfWeek=function getDayOfWeek(date){var dow=date.getDay();if(dow===0){dow=7;}return dow};var formatTimezone=function formatTimezone(date){return (String(date).match(timezone)||[""]).pop().replace(timezoneClip,"").replace(/GMT\+0000/g,"UTC")};
+
+const dayNames = (lang) => {
+    if (lang == 'es-ES')
+        return [
+            'Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb',
+            'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
+        ];
+    return [
+        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ];
+};
+const monthNames = (lang) => {
+    if (lang == 'es-ES')
+        return [
+            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic',
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+    return [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    ];
+};
+const timeNames = () => {
+    return ['a', 'p', 'am', 'pm', 'A', 'P', 'AM', 'PM'];
+};
+
+const config$2 = {
+    language: 'en-US'
+};
+const setConfig = (cfg) => {
+    config$2.language = cfg.language;
+    changeDateFormatLang();
+};
+const getConfig = () => {
+    return config$2;
+};
+const changeDateFormatLang = () => {
+    i18n.dayNames = dayNames(config$2.language);
+    i18n.monthNames = monthNames(config$2.language);
+    i18n.timeNames = timeNames();
+};
 
 /**
  * Convert text to slug format for URLs and SEO
@@ -108,6 +152,83 @@ const extractBase64Data = (base64) => {
         extension: ext,
         data: data
     };
+};
+
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol */
+
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+
+/**
+ * Extract Base64 data of File or Blob
+ *
+ * @param {number} file `File` or `Blob` File or Blob data
+ * @return {boolean} base64 `string` Base64 data
+ * @example OU.extractBase64FileData([File]) // Return data:[<mediatype>][;base64],<data>
+ */
+const extractBase64FileData = (file) => __awaiter(void 0, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onend = reject;
+        reader.onabort = reject;
+        reader.readAsDataURL(file);
+        reader.onloadend = () => resolve(reader.result);
+    });
+});
+
+/**
+ * Format bytes (5232000 -> "4.99 MB")
+ *
+ * @param {format} bytes `number` Bytes of a file or something
+ * @return {string} Bytes formatted `string`
+ * @example OU.formatBytes(5232000) // Return "4.99 MB"
+ */
+const formatBytes = (bytes, decimals = 2) => {
+    if (!+bytes)
+        return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+};
+
+/**
+ * Remove HTML from string
+ *
+ * @param {format} html `string` HTML string
+ * @return {string} text without html `string`
+ * @example OU.removeHTML("<html><body>Hello World!</body></html>") // Return "Hello World!"
+ */
+const removeHTML = (html) => {
+    return html.replace(/<[^>]*>?/gm, '');
 };
 
 /**
@@ -222,7 +343,7 @@ const generateId = () => {
  * Generate number between two numbers
  *
  * @param {number} min `number` Minimum number
- * @param {number} min `number` Máximum number
+ * @param {number} min `number` Maximum number
  * @return {number} number `number` Number between min and max
  * @example
  * OU.generateNumberBetween(300, 500) // Return 382
@@ -234,14 +355,96 @@ const generateNumberBetween = (min, max) => {
 };
 
 /**
- * Checks if a unix timestamp has expired relative to the current date.
+ * Get password strength (bad/medium/good/strong)
  *
- * @param {number} timestamp `number` Unix timestamp in seconds
- * @return {boolean} true/false `boolean`
- * @example OU.isTimestampExpired(1695371156) // Return true
+ * @param {string} password `string` Password
+ * @return {string} (bad/medium/good/strong) `string`
+ * @example
+ * OU.getPasswordStrength("12345") // Return "bad"
+ * OU.getPasswordStrength("qwerty") // Return "bad"
+ * OU.getPasswordStrength("Cxtx@5x") // Return "medium"
+ * OU.getPasswordStrength("LBC&m3vPme") // Return "good"
+ * OU.getPasswordStrength("CxziTy@V#utx5x") // Return "strong"
  */
-const isTimestampExpired = (timestamp) => {
-    return Math.floor(Date.now() / 1000) > timestamp;
+const getPasswordStrength = (password) => {
+    let strong = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){14,20}$/);
+    const checkStrong = strong.test(password);
+    if (checkStrong)
+        return 'strong';
+    let good = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/);
+    const checkGood = good.test(password);
+    if (checkGood)
+        return 'good';
+    let medium = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/);
+    const checkMedium = medium.test(password);
+    if (checkMedium)
+        return 'medium';
+    return 'bad';
+};
+
+const time = (lang, plural = false) => {
+    if (lang == 'es-ES')
+        return {
+            ago: 'hace',
+            now: 'justo ahora',
+            lessthanaminute: 'menos de 1 minuto',
+            millisecond: plural ? 'milisegundos' : 'milisegundo',
+            second: plural ? 'segundos' : 'segundo',
+            minute: plural ? 'minutos' : 'minuto',
+            hour: plural ? 'horas' : 'hora',
+            day: plural ? 'días' : 'día',
+            week: plural ? 'semanas' : 'semana',
+            month: plural ? 'meses' : 'mes',
+            year: plural ? 'años' : 'año',
+        };
+    return {
+        ago: 'ago',
+        now: 'just now',
+        lessthanaminute: 'less than a minute',
+        millisecond: plural ? 'milliseconds' : 'millisecond',
+        second: plural ? 'seconds' : 'second',
+        minute: plural ? 'minutes' : 'minute',
+        hour: plural ? 'hours' : 'hour',
+        day: plural ? 'days' : 'day',
+        week: plural ? 'weeks' : 'week',
+        month: plural ? 'months' : 'month',
+        year: plural ? 'years' : 'year',
+    };
+};
+
+const config$1 = getConfig();
+/**
+ * Calculate reading time of text
+ *
+ * @param {string} text `string` Text you want to calculate
+ * @return {number} minutes `string` Time. Example: 4.5 minutes
+ * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
+ */
+const calculateReadingTime = (text) => {
+    const lang = config$1.language;
+    let words = text.split(' ');
+    let minutes = words.length / 225;
+    minutes = Math.round(minutes * 10) / 10;
+    if (minutes <= 0)
+        return time(lang).lessthanaminute;
+    if (minutes <= 60)
+        return `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24)
+        return `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}`;
+    const days = Math.floor(hours / 24);
+    if (days < 7)
+        return `${days} ${days > 1 ? time(lang, true).day : time(lang).day}`;
+    // This part may never be used, but it doesn't cost me anything to put it on.
+    // If someone calculates a text so long that it takes more than 1 day to read, please mention me at x.com/ovniroto xD
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4)
+        return `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}`;
+    const months = Math.floor(days / 30);
+    if (months < 12)
+        return `${months} ${months > 1 ? time(lang, true).month : time(lang).month}`;
+    const years = Math.floor(days / 365);
+    return `${years} ${years > 1 ? time(lang, true).year : time(lang).year}`;
 };
 
 /**
@@ -297,4 +500,224 @@ const convertTimestampToDate = (timestamp, separator = "-", includeTime = false)
     return `${day}${separator}${month}${separator}${year}${time}`;
 };
 
-export { convertDateToTimestamp, convertTextToSlug, convertTimestampToDate, extractBase64Data, generateCode, generateId, generateNumberBetween, isTimestampExpired };
+/**
+ * Format actual date
+ *
+ * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
+ * @return {string} date `string`
+ * @example OU.formatActualDate("dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
+ */
+const formatActualDate = (format) => {
+    return dateFormat(new Date(), format);
+};
+
+/**
+ * Format timestamp to date
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
+ * @return {string} date `string`
+ * @example OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
+ */
+const formatTimestamp = (timestamp, format) => {
+    const date = new Date(timestamp * 1000);
+    return dateFormat(date, format);
+};
+
+const config = getConfig();
+/**
+ * Get relative time of timestamp
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @return {string} relative time `string`
+ * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
+ */
+const getRelativeTime = (timestamp) => {
+    const lang = config.language;
+    const elapsedTime = (Math.floor(Date.now() / 1000)) - timestamp;
+    if (elapsedTime < 60)
+        return time(lang).now;
+    const seconds = elapsedTime;
+    if (seconds < 60) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second}` : `${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second} ${time(lang).ago}`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}` : `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute} ${time(lang).ago}`;
+    }
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}` : `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour} ${time(lang).ago}`;
+    }
+    const days = Math.floor(hours / 24);
+    if (days < 7) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${days} ${days > 1 ? time(lang, true).day : time(lang).day}` : `${days} ${days > 1 ? time(lang, true).day : time(lang).day} ${time(lang).ago}`;
+    }
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}` : `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week} ${time(lang).ago}`;
+    }
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${months} ${months > 1 ? time(lang, true).month : time(lang).month}` : `${months} ${months > 1 ? time(lang, true).month : time(lang).month} ${time(lang).ago}`;
+    }
+    const years = Math.floor(days / 365);
+    const timeAgo = lang == 'es-ES' ? `${time(lang).ago} ${years} ${years > 1 ? time(lang, true).year : time(lang).year}` : `${years} ${years > 1 ? time(lang, true).year : time(lang).year} ${time(lang).ago}`;
+    return timeAgo;
+};
+
+/**
+ * Get unix timestamp in seconds (default) or milliseconds
+ *
+ * @param {number} milliseconds `boolean` Get unix timestamp in milliseconds (Default: false)
+ * @return {number} `number` Unix timestamp in seconds or milliseconds
+ * @example OU.getTimestamp() // Return format 1695593795 (unix timestamp in seconds)
+ * @example OU.getTimestamp(true) // Return format 1695593795399 (unix timestamp in milliseconds)
+ */
+const getTimestamp = (milliseconds = false) => {
+    return milliseconds ? Date.now() : (Math.floor(Date.now() / 1000.0));
+};
+
+/**
+ * Checks if a unix timestamp has expired relative to the current date.
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds or milliseconds
+ * @param {number} milliseconds `boolean` Activate it if you are going to check a timestamp in milliseconds
+ * @return {boolean} true/false `boolean`
+ * @example OU.isTimestampExpired(1695371156) // Return true
+ * @example OU.isTimestampExpired(1695593795399, true) // Return true
+ * @example OU.isTimestampExpired(2863283114) // Return false
+ */
+const isTimestampExpired = (timestamp, milliseconds = false) => {
+    return milliseconds ? (Date.now() > timestamp) : (Math.floor(Date.now() / 1000) > timestamp);
+};
+
+/**
+ * Sleep
+ *
+ * @param {format} milliseconds `number` Milliseconds. Example: 300
+ * @example OU.sleep(300) // Sleep 300 milliseconds
+ */
+const sleep = (milliseconds) => new Promise((r) => setTimeout(r, milliseconds));
+
+/**
+ * Checks if text contain digits
+ *
+ * @param {string} text `string` Text
+ * @return {boolean} true/false `boolean`
+ * @example
+ * OU.containDigits("Area51") // Return true
+ * OU.containDigits("ovni") // Return false
+ */
+const containDigits = (text) => {
+    return /[0-9]/.test(text);
+};
+
+/**
+ * Check if text contain normalcase letters
+ *
+ * @param {string} text `string` Text
+ * @return {string} true/false `boolean`
+ * @example
+ * OU.containNormalcaseLetters("text with normalcase letters") // Return true
+ * OU.containNormalcaseLetters("Text With Normalcase And Uppercase Letters") // Return true
+ * OU.containNormalcaseLetters("TEXT WITH UPPERCASE LETTERS") // Return false
+ */
+const containNormalcaseLetters = (text) => {
+    return /[a-z]/.test(text);
+};
+
+/**
+ * Check if text contain special chars
+ *
+ * @param {string} text `string` Text
+ * @return {string} true/false `boolean`
+ * @example
+ * OU.containSpecialChars("Text with speci@l ch@ract&r$") // Return true
+ * OU.containSpecialChars("Text with spaces") // Return true
+ * OU.containSpecialChars("TextWithoutSpaces") // Return false
+ */
+const containSpecialChars = (text) => {
+    return /[`!@#$%^&*()_\-+=\[\]{};':"\\|,.<>\/?~ ]/.test(text);
+};
+
+/**
+ * Check if text contain uppercase letters
+ *
+ * @param {string} text `string` Text
+ * @return {string} true/false `boolean`
+ * @example
+ * OU.containUppercaseLetters("TEXT WITH UPPERCASE LETTERS") // Return true
+ * OU.containUppercaseLetters("Text With Normalcase And Uppercase Letters") // Return true
+ * OU.containUppercaseLetters("text with normalcase letters") // Return false
+ */
+const containUppercaseLetters = (text) => {
+    return /[A-Z]/.test(text);
+};
+
+/**
+ * Checks if email is valid
+ *
+ * @param {string} email `string` Email
+ * @return {boolean} true/false `boolean`
+ * @example
+ * OU.isEmailValid("name@domain.com") // Return true
+ * OU.isEmailValid("name#domain.com") // Return false
+ * OU.isEmailValid("namedomain.com") // Return false
+ * OU.isEmailValid("domain.com") // Return false
+ */
+const isEmailValid = (email) => {
+    return /^([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)([\.])([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)$/.test(email);
+};
+
+/**
+ * Checks if password is valid
+ *
+ * @param {string} password `string` Password
+ * @param {number} minLength `number` Minimum length
+ * @param {number} maxLength `number` Maximum length
+ * @param {Array[string]} charactersRequired `array[string]` Characters required. Allowed values: ['alphabet','digits','symbols']
+ * @return {boolean} true/false `boolean`
+ * @example
+ * OU.isPasswordValid("R@ndomP@ss*1234", 3, 30, ['alphabet','digits','symbols']) // Return true
+ * OU.isPasswordValid("RandomPass1234", 3, 30, ['alphabet']) // Return false
+ * OU.isPasswordValid("1234", 3, 30, ['alphabet']) // Return false
+ */
+const isPasswordValid = (password, minLength = 3, maxLength = 30, charactersRequired = []) => {
+    let charactersRegexp = '';
+    charactersRequired.forEach((chars) => {
+        if (chars == 'alphabet')
+            charactersRegexp += '(?=.*[a-z])(?=.*[A-Z])';
+        if (chars == 'digits')
+            charactersRegexp += '(?=.*\d)';
+        if (chars == 'symbols')
+            charactersRegexp += '(?=.*[¿!?Ç#$^+=!*()@%&_.·-])';
+    });
+    const validRegexp = new RegExp(`^${charactersRegexp ? charactersRegexp : '(?=.*[a-z])'}.{${minLength},${maxLength}}$`);
+    return validRegexp.test(password);
+};
+
+/**
+ * Checks if username is valid
+ *
+ * @param {string} username `string` Username
+ * @param {number} minLength `number` Minimum length
+ * @param {number} maxLength `number` Maximum length
+ * @param {Array[string]} charactersAllowed `array[string]` Characters allowed. Allowed values: ['a-z','A-Z','0-9','_']
+ * @return {boolean} true/false `boolean`
+ * @example
+ * OU.isUsernameValid("username", 3, 20, ['az','AZ','09','_']) // Return true
+ * OU.isUsernameValid("user.name", 3, 20, ['az','AZ','09','_']) // Return false
+ * OU.isUsernameValid("username", 1, 5, ['az','AZ','09','_']) // Return false
+ * OU.isUsernameValid("12345awsd", 3, 10, ['az','AZ','09','_']) // Return true
+ * OU.isUsernameValid("ovni.dev", 3, 10, ['az','AZ','.']) // Return true
+ * OU.isUsernameValid("dev", 3, 10) // Return true
+ */
+const isUsernameValid = (username, minLength = 3, maxLength = 20, charactersAllowed = []) => {
+    let charactersRegexp = '';
+    charactersAllowed.forEach((char) => { charactersRegexp += char; });
+    const validRegexp = new RegExp(`^${charactersRegexp ? '[' + charactersRegexp + ']' : '[a-z]'}{${minLength},${maxLength}}$`);
+    return validRegexp.test(username);
+};
+
+export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, extractBase64Data as convertBase64Data, convertDateToTimestamp, convertTextToSlug, convertTimestampToDate, extractBase64FileData, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };
