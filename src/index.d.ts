@@ -8,25 +8,6 @@ export declare const getConfig: () => {
     language: string;
 };
 
-export declare const dayNames: (lang: string) => string[];
-export declare const monthNames: (lang: string) => string[];
-export declare const timeNames: () => string[];
-
-export declare const time: (lang: Lang, plural?: boolean) => {
-    ago: string;
-    in: string;
-    now: string;
-    lessthanaminute: string;
-    millisecond: string;
-    second: string;
-    minute: string;
-    hour: string;
-    day: string;
-    week: string;
-    month: string;
-    year: string;
-};
-
 /**
  * Extract information of base64 file data
  *
@@ -206,6 +187,15 @@ export declare const calculateReadingTime: (text: any) => string;
  * OU.getPasswordStrength("CxziTy@V#utx5x") // Return "strong"
  */
 export declare const getPasswordStrength: (password: string) => string;
+
+/**
+ * Get relative time of timestamp
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @return {string} time `string`
+ * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
+ */
+export declare const getRelativeTime: (timestamp: number) => string;
 
 /**
  * Get unix timestamp in seconds (default) or milliseconds
