@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es6",
         "module": "esnext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "noEmitOnError": true,
         "lib": [ "dom", "dom.iterable", "esnext", "es5", "es6" ],
         "strict": true,  
@@ -10,9 +10,12 @@
         "outDir": "./dist",
         "rootDir": "./src",
 		"baseUrl": "./src",
-        "types": [ "./src/index.d.ts" ],
+        "typeRoots": [
+            "./src/index.d.ts",
+        ],
 		"paths": {
 			"@config": ["config.ts"],
+			"@types": ["types.ts"],
 			"@language/*": ["language/*"],
 			"@converters/*": ["utils/converters/*"],
 			"@formatters/*": ["utils/formatters/*"],

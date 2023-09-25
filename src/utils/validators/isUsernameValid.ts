@@ -1,3 +1,5 @@
+import { AllowedUsernameValues } from '@types'
+
 /**
  * Checks if username is valid
  *

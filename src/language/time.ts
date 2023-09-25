@@ -1,3 +1,5 @@
+import { Lang } from '@types'
+
 export const time = (lang: Lang, plural = false) => {
     if(lang == 'es-ES') return {
         ago: 'hace',

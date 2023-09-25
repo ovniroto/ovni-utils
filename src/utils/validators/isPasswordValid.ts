@@ -1,3 +1,5 @@
+import { AllowedPasswordValues } from '@types'
+
 /**
  * Checks if password is valid
  *

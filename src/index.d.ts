@@ -1,18 +1,18 @@
-type Config = { language: Lang }
-type Lang = 'es-ES' | 'en-EN'
-type AllowedPasswordValues = 'alphabet' | 'digits' | 'symbols'
-type AllowedUsernameValues = 'a-z' | 'A-Z' | '0-9' | '_' | '-' | '.'
+export declare type Config = { language: Lang }
+export declare type Lang = 'es-ES' | 'en-EN'
+export declare type AllowedPasswordValues = 'alphabet' | 'digits' | 'symbols'
+export declare type AllowedUsernameValues = 'a-z' | 'A-Z' | '0-9' | '_' | '-' | '.'
 
-declare const setConfig: (cfg: Config) => void;
-declare const getConfig: () => {
+export declare const setConfig: (cfg: Config) => void;
+export declare const getConfig: () => {
     language: string;
 };
 
-declare const dayNames: (lang: string) => string[];
-declare const monthNames: (lang: string) => string[];
-declare const timeNames: () => string[];
+export declare const dayNames: (lang: string) => string[];
+export declare const monthNames: (lang: string) => string[];
+export declare const timeNames: () => string[];
 
-declare const time: (lang: Lang, plural?: boolean) => {
+export declare const time: (lang: Lang, plural?: boolean) => {
     ago: string;
     in: string;
     now: string;
@@ -34,7 +34,7 @@ declare const time: (lang: Lang, plural?: boolean) => {
  * @return {object} `object` { type: string, extension: string, data: string }
  * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...") // Return { type: 'jpg', extension: 'jpg', data: '/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...' }
  */
-declare const convertBase64Data: (base64: string) => {
+export declare const convertBase64Data: (base64: string) => {
     type: string;
     extension: string;
     data: string;
@@ -47,7 +47,7 @@ declare const convertBase64Data: (base64: string) => {
  * @return {boolean} File Binary `Uint8Array` File Binary (Uint8Array)
  * @example OU.convertBase64ToFile("/9j/4Rh3RXhpZgAATU0AKgAAA...") // Return Uint8Array [ 82, 235, 123, 11, ... ]
  */
-declare const convertBase64ToFile: (base64: string) => Uint8Array;
+export declare const convertBase64ToFile: (base64: string) => Uint8Array;
 
 /**
  * Convert date to timestamp
@@ -56,7 +56,7 @@ declare const convertBase64ToFile: (base64: string) => Uint8Array;
  * @return {number} timestamp `number`
  * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
  */
-declare const convertDateToTimestamp: (datetime: string) => number;
+export declare const convertDateToTimestamp: (datetime: string) => number;
 
 /**
  * Convert File or Blob to Base64 data
@@ -65,7 +65,7 @@ declare const convertDateToTimestamp: (datetime: string) => number;
  * @return {boolean} base64 `string` Base64 data
  * @example OU.convertFileToBase64([File]) // Return data:[<mediatype>][;base64],<data>
  */
-declare const convertFileToBase64: (file: File | Blob) => Promise<string>;
+export declare const convertFileToBase64: (file: File | Blob) => Promise<string>;
 
 /**
  * Convert Hex to RGB
@@ -74,7 +74,7 @@ declare const convertFileToBase64: (file: File | Blob) => Promise<string>;
  * @return {boolean} { r, g, b } `object` Object with rgb
  * @example OU.convertHexToRGB("#ffffff") // Return { r: 255, g: 255, b: 255 }
  */
-declare const convertHexToRGB: (hex: string) => {
+export declare const convertHexToRGB: (hex: string) => {
     r: number;
     g: number;
     b: number;
@@ -89,7 +89,7 @@ declare const convertHexToRGB: (hex: string) => {
  * @return {boolean} Hex `string` Hex color
  * @example OU.convertRGBToHex(255, 255, 255) // Return "#ffffff"
  */
-declare const convertRGBToHex: (r: number, g: number, b: number) => string;
+export declare const convertRGBToHex: (r: number, g: number, b: number) => string;
 
 /**
  * Convert text to slug format for URLs and SEO
@@ -103,7 +103,7 @@ declare const convertRGBToHex: (r: number, g: number, b: number) => string;
  * OU.convertTextToSlug("Két fekete ló a hegyen") // Return "ket-fekete-lo-a-hegyen"
  * OU.convertTextToSlug("@username is the best") // Return "username-is-the-best"
  */
-declare const convertTextToSlug: (text: string) => string;
+export declare const convertTextToSlug: (text: string) => string;
 
 /**
  * Convert timestamp to date
@@ -114,7 +114,7 @@ declare const convertTextToSlug: (text: string) => string;
  * @return {string} date `string` Example: "22/09/2023 18:00"
  * @example OU.convertTimestampToDate(1695398400) // Return "22/09/2023 18:00"
  */
-declare const convertTimestampToDate: (timestamp: number, separator?: string, includeTime?: boolean) => string;
+export declare const convertTimestampToDate: (timestamp: number, separator?: string, includeTime?: boolean) => string;
 
 /**
  * Format actual date
@@ -123,7 +123,7 @@ declare const convertTimestampToDate: (timestamp: number, separator?: string, in
  * @return {string} date `string` Actual date formatted
  * @example OU.formatActualDate("dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
  */
-declare const formatActualDate: (format: string) => string;
+export declare const formatActualDate: (format: string) => string;
 
 /**
  * Format bytes (5232000 -> "4.99 MB")
@@ -132,7 +132,7 @@ declare const formatActualDate: (format: string) => string;
  * @return {string} Bytes formatted `string`
  * @example OU.formatBytes(5232000) // Return "4.99 MB"
  */
-declare const formatBytes: (bytes: number, decimals?: number) => string;
+export declare const formatBytes: (bytes: number, decimals?: number) => string;
 
 /**
  * Format timestamp to date
@@ -142,7 +142,7 @@ declare const formatBytes: (bytes: number, decimals?: number) => string;
  * @return {string} date `string` Timestamp date formatted
  * @example OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
  */
-declare const formatTimestamp: (timestamp: number, format: string) => string;
+export declare const formatTimestamp: (timestamp: number, format: string) => string;
 
 /**
  * Generate codes
@@ -161,7 +161,7 @@ declare const formatTimestamp: (timestamp: number, format: string) => string;
  * OU.generateCode(30, 30) // Return format "bDxZW9R1et1W6LuNl3DRTNNZSuw2hD"
  * OU.generateCode(15, 15, true) // Return format "501961762571582"
  */
-declare const generateCode: (length: number, pairs: number, onlyNumbers?: boolean, onlyLetters?: boolean, uppercaseLetters?: boolean) => string;
+export declare const generateCode: (length: number, pairs: number, onlyNumbers?: boolean, onlyLetters?: boolean, uppercaseLetters?: boolean) => string;
 
 /**
  * Generate an unique id
@@ -169,7 +169,7 @@ declare const generateCode: (length: number, pairs: number, onlyNumbers?: boolea
  * @return {string} id `string`
  * @example OU.generateId() // Return format d9df8552a6e04d5bb8d3625dca6ffbd5
  */
-declare const generateId: () => string;
+export declare const generateId: () => string;
 
 /**
  * Generate number between two numbers
@@ -182,7 +182,7 @@ declare const generateId: () => string;
  * OU.generateNumberBetween(10, 50) // Return 29
  * OU.generateNumberBetween(10000, 90000) // Return 46692
  */
-declare const generateNumberBetween: (min: number, max: number) => number;
+export declare const generateNumberBetween: (min: number, max: number) => number;
 
 /**
  * Calculate reading time of text
@@ -191,7 +191,7 @@ declare const generateNumberBetween: (min: number, max: number) => number;
  * @return {number} Time `string` Time. Example: 4.5 minutes
  * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
  */
-declare const calculateReadingTime: (text: any) => string;
+export declare const calculateReadingTime: (text: any) => string;
 
 /**
  * Get password strength (bad/medium/good/strong)
@@ -205,7 +205,7 @@ declare const calculateReadingTime: (text: any) => string;
  * OU.getPasswordStrength("LBC&m3vPme") // Return "good"
  * OU.getPasswordStrength("CxziTy@V#utx5x") // Return "strong"
  */
-declare const getPasswordStrength: (password: string) => string;
+export declare const getPasswordStrength: (password: string) => string;
 
 /**
  * Get unix timestamp in seconds (default) or milliseconds
@@ -215,7 +215,7 @@ declare const getPasswordStrength: (password: string) => string;
  * @example OU.getTimestamp() // Return format 1695593795 (unix timestamp in seconds)
  * @example OU.getTimestamp(true) // Return format 1695593795399 (unix timestamp in milliseconds)
  */
-declare const getTimestamp: (milliseconds?: boolean) => number;
+export declare const getTimestamp: (milliseconds?: boolean) => number;
 
 /**
  * Remove HTML from string
@@ -224,7 +224,7 @@ declare const getTimestamp: (milliseconds?: boolean) => number;
  * @return {string} text without html `string`
  * @example OU.removeHTML("<html><body>Hello World!</body></html>") // Return "Hello World!"
  */
-declare const removeHTML: (html: string) => string;
+export declare const removeHTML: (html: string) => string;
 
 /**
  * Stop code execution for as long as you need
@@ -232,7 +232,7 @@ declare const removeHTML: (html: string) => string;
  * @param {format} milliseconds `number` Milliseconds. Example: 300
  * @example OU.sleep(300) // Sleep 300 milliseconds
  */
-declare const sleep: (milliseconds: number) => Promise<unknown>;
+export declare const sleep: (milliseconds: number) => Promise<unknown>;
 
 /**
  * Checks if text contain digits
@@ -243,7 +243,7 @@ declare const sleep: (milliseconds: number) => Promise<unknown>;
  * OU.containDigits("Area51") // Return true
  * OU.containDigits("ovni") // Return false
  */
-declare const containDigits: (text: string) => boolean;
+export declare const containDigits: (text: string) => boolean;
 
 /**
  * Check if text contain normalcase letters
@@ -255,7 +255,7 @@ declare const containDigits: (text: string) => boolean;
  * OU.containNormalcaseLetters("Text With Normalcase And Uppercase Letters") // Return true
  * OU.containNormalcaseLetters("TEXT WITH UPPERCASE LETTERS") // Return false
  */
-declare const containNormalcaseLetters: (text: string) => boolean;
+export declare const containNormalcaseLetters: (text: string) => boolean;
 
 /**
  * Check if text contain special chars
@@ -267,7 +267,7 @@ declare const containNormalcaseLetters: (text: string) => boolean;
  * OU.containSpecialChars("Text with spaces") // Return true
  * OU.containSpecialChars("TextWithoutSpaces") // Return false
  */
-declare const containSpecialChars: (text: string) => boolean;
+export declare const containSpecialChars: (text: string) => boolean;
 
 /**
  * Check if text contain uppercase letters
@@ -279,7 +279,7 @@ declare const containSpecialChars: (text: string) => boolean;
  * OU.containUppercaseLetters("Text With Normalcase And Uppercase Letters") // Return true
  * OU.containUppercaseLetters("text with normalcase letters") // Return false
  */
-declare const containUppercaseLetters: (text: string) => boolean;
+export declare const containUppercaseLetters: (text: string) => boolean;
 
 /**
  * Checks if email is valid
@@ -292,7 +292,7 @@ declare const containUppercaseLetters: (text: string) => boolean;
  * OU.isEmailValid("namedomain.com") // Return false
  * OU.isEmailValid("domain.com") // Return false
  */
-declare const isEmailValid: (email: string) => boolean;
+export declare const isEmailValid: (email: string) => boolean;
 
 /**
  * Checks if password is valid
@@ -307,7 +307,7 @@ declare const isEmailValid: (email: string) => boolean;
  * OU.isPasswordValid("RandomPass1234", 3, 30, ['alphabet']) // Return false
  * OU.isPasswordValid("1234", 3, 30, ['alphabet']) // Return false
  */
-declare const isPasswordValid: (password: string, minLength?: number, maxLength?: number, charactersRequired?: AllowedPasswordValues[]) => boolean;
+export declare const isPasswordValid: (password: string, minLength?: number, maxLength?: number, charactersRequired?: AllowedPasswordValues[]) => boolean;
 
 /**
  * Checks if a unix timestamp has expired relative to the current date.
@@ -319,7 +319,7 @@ declare const isPasswordValid: (password: string, minLength?: number, maxLength?
  * @example OU.isTimestampExpired(1695593795399, true) // Return true
  * @example OU.isTimestampExpired(2863283114) // Return false
  */
-declare const isTimestampExpired: (timestamp: number, milliseconds?: boolean) => boolean;
+export declare const isTimestampExpired: (timestamp: number, milliseconds?: boolean) => boolean;
 
 /**
  * Checks if username is valid
@@ -337,4 +337,4 @@ declare const isTimestampExpired: (timestamp: number, milliseconds?: boolean) =>
  * OU.isUsernameValid("ovni.dev", 3, 10, ['az','AZ','.']) // Return true
  * OU.isUsernameValid("dev", 3, 10) // Return true
  */
-declare const isUsernameValid: (username: string, minLength?: number, maxLength?: number, charactersAllowed?: AllowedUsernameValues[]) => boolean;
+export declare const isUsernameValid: (username: string, minLength?: number, maxLength?: number, charactersAllowed?: AllowedUsernameValues[]) => boolean;

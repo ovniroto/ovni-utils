@@ -1,5 +1,6 @@
 import { getConfig } from '@config'
 import { time } from '@language/time'
+import { Lang } from '@types'
 
 const config = getConfig()
 

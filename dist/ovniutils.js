@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.4.2
+ *  OvniUtils v0.4.3
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
