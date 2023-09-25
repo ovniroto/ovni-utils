@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.3.3
+ *  OvniUtils v0.4.0
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
@@ -56,6 +56,7 @@ const time = (lang, plural = false) => {
     if (lang == 'es-ES')
         return {
             ago: 'hace',
+            in: 'en',
             now: 'justo ahora',
             lessthanaminute: 'menos de 1 minuto',
             millisecond: plural ? 'milisegundos' : 'milisegundo',
@@ -69,6 +70,7 @@ const time = (lang, plural = false) => {
         };
     return {
         ago: 'ago',
+        in: 'in',
         now: 'just now',
         lessthanaminute: 'less than a minute',
         millisecond: plural ? 'milliseconds' : 'millisecond',
@@ -155,36 +157,55 @@ const config = getConfig();
  */
 const getRelativeTime = (timestamp) => {
     const lang = config.language;
-    const elapsedTime = (Math.floor(Date.now() / 1000)) - timestamp;
-    if (elapsedTime < 60)
-        return time(lang).now;
+    const now = Date.now() / 1000;
+    const elapsedTime = Math.abs((Math.floor(now)) - timestamp);
+    let amountTime, type;
     const seconds = elapsedTime;
-    if (seconds < 60) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second}` : `${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second} ${time(lang).ago}`;
-    }
     const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}` : `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute} ${time(lang).ago}`;
-    }
     const hours = Math.floor(minutes / 60);
-    if (hours < 24) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}` : `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour} ${time(lang).ago}`;
-    }
     const days = Math.floor(hours / 24);
-    if (days < 7) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${days} ${days > 1 ? time(lang, true).day : time(lang).day}` : `${days} ${days > 1 ? time(lang, true).day : time(lang).day} ${time(lang).ago}`;
-    }
     const weeks = Math.floor(days / 7);
-    if (weeks < 4) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}` : `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week} ${time(lang).ago}`;
-    }
     const months = Math.floor(days / 30);
-    if (months < 12) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${months} ${months > 1 ? time(lang, true).month : time(lang).month}` : `${months} ${months > 1 ? time(lang, true).month : time(lang).month} ${time(lang).ago}`;
-    }
     const years = Math.floor(days / 365);
-    const timeAgo = lang == 'es-ES' ? `${time(lang).ago} ${years} ${years > 1 ? time(lang, true).year : time(lang).year}` : `${years} ${years > 1 ? time(lang, true).year : time(lang).year} ${time(lang).ago}`;
-    return timeAgo;
+    /* Years */
+    if (months > 12) {
+        amountTime = years;
+        type = years > 1 ? time(lang, true).year : time(lang).year;
+    }
+    /* Months */
+    else if (days > 30) {
+        amountTime = months;
+        type = months > 1 ? time(lang, true).month : time(lang).month;
+    }
+    /* Weeks */
+    else if (days > 7) {
+        amountTime = weeks;
+        type = weeks > 1 ? time(lang, true).week : time(lang).week;
+    }
+    /* Days */
+    else if (hours > 24) {
+        amountTime = days;
+        type = days > 1 ? time(lang, true).day : time(lang).day;
+    }
+    /* hours */
+    else if (minutes > 60) {
+        amountTime = hours;
+        type = hours > 1 ? time(lang, true).hour : time(lang).hour;
+    }
+    /* Minutes */
+    else if (seconds > 60) {
+        amountTime = minutes;
+        type = minutes > 1 ? time(lang, true).minute : time(lang).minute;
+    }
+    /* Seconds */
+    else {
+        amountTime = seconds;
+        type = seconds > 1 ? time(lang, true).second : time(lang).second;
+    }
+    let relative = amountTime + ' ' + type;
+    if (timestamp > now)
+        return time(lang).in + ' ' + relative;
+    return lang == 'es-ES' ? (time(lang).ago + ' ' + relative) : (relative + ' ' + time(lang).ago);
 };
 
 /**
@@ -294,6 +315,23 @@ const convertBase64Data = (base64) => {
     };
 };
 
+/**
+ * Convert Base64 to File (Uint8Array)
+ *
+ * @param {number} base64 `string` Base64
+ * @return {boolean} File Binary `Uint8Array` File Binary (Uint8Array)
+ * @example OU.convertBase64ToFile("/9j/4Rh3RXhpZgAATU0AKgAAA...") // Return Uint8Array [ 82, 235, 123, 11, ... ]
+ */
+const convertBase64ToFile = (base64) => {
+    let binary = atob(base64);
+    let length = binary.length;
+    let uint8Array = new Uint8Array(new ArrayBuffer(length));
+    for (let index = 0; index < length; index++) {
+        uint8Array[index] = binary.charCodeAt(index);
+    }
+    return uint8Array;
+};
+
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -342,6 +380,38 @@ const convertFileToBase64 = (file) => __awaiter(void 0, void 0, void 0, function
         reader.onloadend = () => resolve(reader.result);
     });
 });
+
+/**
+ * Convert Hex to RGB
+ *
+ * @param {number} hex `string` Hex color (#000000)
+ * @return {boolean} { r, g, b } `object` Object with rgb
+ * @example OU.convertHexToRGB("#ffffff") // Return { r: 255, g: 255, b: 255 }
+ */
+const convertHexToRGB = (hex) => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+};
+
+/**
+ * Convert RGB to Hex
+ *
+ * @param {number} r `number` Red color
+ * @param {number} g `number` Green color
+ * @param {number} b `number` Blue color
+ * @return {boolean} Hex `string` Hex color
+ * @example OU.convertRGBToHex(255, 255, 255) // Return "#ffffff"
+ */
+const convertRGBToHex = (r, g, b) => {
+    const hexR = Math.min(255, Math.max(0, r)).toString(16).padStart(2, '0');
+    const hexG = Math.min(255, Math.max(0, g)).toString(16).padStart(2, '0');
+    const hexB = Math.min(255, Math.max(0, b)).toString(16).padStart(2, '0');
+    return `#${hexR}${hexG}${hexB}`;
+};
 
 /**
  * Convert date to timestamp
@@ -720,4 +790,4 @@ const isTimestampExpired = (timestamp, milliseconds = false) => {
     return milliseconds ? (Date.now() > timestamp) : (Math.floor(Date.now() / 1000) > timestamp);
 };
 
-export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, convertBase64Data, convertDateToTimestamp, convertFileToBase64, convertTextToSlug, convertTimestampToDate, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };
+export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, convertBase64Data, convertBase64ToFile, convertDateToTimestamp, convertFileToBase64, convertHexToRGB, convertRGBToHex, convertTextToSlug, convertTimestampToDate, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };

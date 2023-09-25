@@ -1,6 +1,7 @@
 export const time = (lang: Lang, plural = false) => {
     if(lang == 'es-ES') return {
         ago: 'hace',
+        in: 'en',
         now: 'justo ahora',
         lessthanaminute: 'menos de 1 minuto',
         millisecond: plural ? 'milisegundos' : 'milisegundo',
@@ -14,6 +15,7 @@ export const time = (lang: Lang, plural = false) => {
     }
     return {
         ago: 'ago',
+        in: 'in',
         now: 'just now',
         lessthanaminute: 'less than a minute',
         millisecond: plural ? 'milliseconds' : 'millisecond',

@@ -1,5 +1,14 @@
 # Changelog
 
+### 0.4.0
+
+Release 25 sep 2023
+
+  * Add [`convertBase64ToFile`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertBase64ToFile) to `converters` related utils
+  * Add [`convertHexToRGB`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertHexToRGB) to `converters` related utils
+  * Add [`convertRGBToHex`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertRGBToHex) to `converters` related utils
+  * Refactor `getRelativeTime`: Now detects if the timestamp is in the past or future
+
 ### 0.3.1
 
 Release 25 sep 2023

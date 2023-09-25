@@ -1,5 +1,3 @@
-type AllowedValues = 'alphabet' | 'digits' | 'symbols'
-
 /**
  * Checks if password is valid
  *
@@ -13,7 +11,7 @@ type AllowedValues = 'alphabet' | 'digits' | 'symbols'
  * OU.isPasswordValid("RandomPass1234", 3, 30, ['alphabet']) // Return false
  * OU.isPasswordValid("1234", 3, 30, ['alphabet']) // Return false
  */
-const isPasswordValid = (password: string, minLength = 3, maxLength = 30, charactersRequired: AllowedValues[] = []): boolean => {
+const isPasswordValid = (password: string, minLength = 3, maxLength = 30, charactersRequired: AllowedPasswordValues[] = []): boolean => {
 
     let charactersRegexp = ''
 

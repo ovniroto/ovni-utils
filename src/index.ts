@@ -10,7 +10,10 @@ export { default as sleep } from './utils/global/sleep'
 
 // Converters related utils
 export { default as convertBase64Data } from './utils/converters/convertBase64Data'
+export { default as convertBase64ToFile } from './utils/converters/convertBase64ToFile'
 export { default as convertFileToBase64 } from './utils/converters/convertFileToBase64'
+export { default as convertHexToRGB } from './utils/converters/convertHexToRGB'
+export { default as convertRGBToHex } from './utils/converters/convertRGBToHex'
 export { default as convertDateToTimestamp } from './utils/converters/convertDateToTimestamp'
 export { default as convertTimestampToDate } from './utils/converters/convertTimestampToDate'
 export { default as convertTextToSlug } from './utils/converters/convertTextToSlug'

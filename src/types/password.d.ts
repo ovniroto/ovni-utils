@@ -1,0 +1,1 @@
+type AllowedPasswordValues = 'alphabet' | 'digits' | 'symbols'

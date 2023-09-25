@@ -1,5 +1,5 @@
-import { getConfig } from '../../config'
-import { time } from '../../language/time'
+import { getConfig } from '@config'
+import { time } from '@language/time'
 
 const config = getConfig()
 
