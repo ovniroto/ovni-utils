@@ -33,12 +33,11 @@ const config = {
 if(process.env.NODE_ENV === 'minify') {
 	config.output = {
 		file: `${dist}/${bundleName}.min.js`,
-		format: 'cjs',
+		format: 'iife',
+		name: 'OU',
 		banner: banner,
 	}
-	config.plugins.push(nodeResolve({
-		browser: true
-	}));
+	config.plugins.push(nodeResolve({ browser: true }));
 	config.plugins.push(terser({}));
 }
 

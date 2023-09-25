@@ -12,7 +12,6 @@ readFile(readme, 'utf8', (err, data) => {
 
     writeFile(readme, data, 'utf8', (err) => {
         if(err) { console.error(err); return; }
-        console.log('Bundle file created!');
     });
 
 });
