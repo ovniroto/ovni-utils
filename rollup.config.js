@@ -1,21 +1,19 @@
 const typescript = require('@rollup/plugin-typescript');
 const terser = require('@rollup/plugin-terser');
 const nodeResolve = require('@rollup/plugin-node-resolve');
-const pkg = require('./package.json');
 
 const dist = 'dist'
 const bundleName = 'ovniutils'
 
 const banner = '/*\n'
 	+ ' *\n'
-	+ ' *  OvniUtils v' + pkg.version + '\n'
+	+ ' *  OvniUtils v' + process.env.npm_package_version + '\n'
 	+ ' *  https://github.com/ovniroto/ovni-utils\n'
 	+ ' *\n'
 	+ ' *  (c) ' + new Date().getFullYear() + ' Lucas O. S.\n'
 	+ ' *  OvniUtils may be freely distributed under the MIT license.\n'
 	+ ' *\n'
 	+ '*/\n';
-
 
 const config = {
 	input: './src/index.ts',

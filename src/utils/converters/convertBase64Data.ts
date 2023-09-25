@@ -5,7 +5,7 @@
  * @return {object} `object` { type: string, extension: string, data: string }
  * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...") // Return { type: 'jpg', extension: 'jpg', data: '/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...' }
  */
-const extractBase64Data = (base64: string): { type: string, extension: string, data: string } => {
+const convertBase64Data = (base64: string): { type: string, extension: string, data: string } => {
 
     const split = base64.split(',')
     const type = split[0].replace('data:', '')
@@ -79,4 +79,4 @@ const extractBase64Data = (base64: string): { type: string, extension: string, d
 
 }
 
-export default extractBase64Data
+export default convertBase64Data

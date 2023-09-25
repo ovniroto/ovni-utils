@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.3.1
+ *  OvniUtils v0.3.2
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
@@ -225,7 +225,7 @@ const sleep = (milliseconds) => new Promise((r) => setTimeout(r, milliseconds));
  * @return {object} `object` { type: string, extension: string, data: string }
  * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...") // Return { type: 'jpg', extension: 'jpg', data: '/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...' }
  */
-const extractBase64Data = (base64) => {
+const convertBase64Data = (base64) => {
     const split = base64.split(',');
     const type = split[0].replace('data:', '')
         .replace(';base64', '')
@@ -720,4 +720,4 @@ const isTimestampExpired = (timestamp, milliseconds = false) => {
     return milliseconds ? (Date.now() > timestamp) : (Math.floor(Date.now() / 1000) > timestamp);
 };
 
-export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, extractBase64Data as convertBase64Data, convertDateToTimestamp, convertFileToBase64, convertTextToSlug, convertTimestampToDate, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };
+export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, convertBase64Data, convertDateToTimestamp, convertFileToBase64, convertTextToSlug, convertTimestampToDate, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };
