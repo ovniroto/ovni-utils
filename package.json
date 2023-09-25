@@ -1,6 +1,6 @@
 {
     "name": "ovni-utils",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "Small library with utilities.",
     "keywords": [
         "ovni",
@@ -22,6 +22,7 @@
     "unpkg": "dist/ovniutils.min.js",
     "jsdelivr": "dist/ovniutils.min.js",
     "browser": "dist/ovniutils.min.js",
+    "types": "src/index.d.ts",
     "homepage": "https://github.com/ovniroto/ovni-utils",
     "repository": {
         "type": "git",

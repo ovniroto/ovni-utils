@@ -10,6 +10,7 @@
         "outDir": "./dist",
         "rootDir": "./src",
 		"baseUrl": "./src",
+        "types": [ "./src/index.d.ts" ],
 		"paths": {
 			"@config": ["config.ts"],
 			"@language/*": ["language/*"],
