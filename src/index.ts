@@ -1,12 +1,12 @@
 export { getConfig, setConfig } from './config'
 
 // Global utils
-export { default as calculateReadingTime } from './utils/global/calculateReadingTime'
-export { default as getPasswordStrength } from './utils/global/getPasswordStrength'
-export { default as getRelativeTime } from './utils/global/getRelativeTime'
-export { default as getTimestamp } from './utils/global/getTimestamp'
-export { default as removeHTML } from './utils/global/removeHTML'
-export { default as sleep } from './utils/global/sleep'
+export { default as calculateReadingTime } from './utils/globals/calculateReadingTime'
+export { default as getPasswordStrength } from './utils/globals/getPasswordStrength'
+export { default as getRelativeTime } from './utils/globals/getRelativeTime'
+export { default as getTimestamp } from './utils/globals/getTimestamp'
+export { default as removeHTML } from './utils/globals/removeHTML'
+export { default as sleep } from './utils/globals/sleep'
 
 // Converters related utils
 export { default as convertBase64Data } from './utils/converters/convertBase64Data'

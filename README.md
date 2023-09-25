@@ -1,4 +1,4 @@
-# OvniUtils v0.4.0
+# OvniUtils v0.4.1
 
 ![GitHub issues](https://img.shields.io/github/issues/ovniroto/ovniutils)
 [![tag](https://img.shields.io/github/tag/ovniroto/ovniutils.svg)](https://github.com/ovniroto/ovni-utils/tags)
@@ -16,12 +16,12 @@ OvniUtils is a small library with utilities that I regularly use in my projects.
 
 Browser:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/ovni-utils@0.4.0/dist/ovniutils.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ovni-utils@0.4.1/dist/ovniutils.min.js"></script>
 ```
 
 Deno:
 ```js
-import * as OU from 'https://esm.sh/ovni-utils@0.4.0'
+import * as OU from 'https://esm.sh/ovni-utils@0.4.1'
 ```
 
 Node:
