@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.3.0
+ *  OvniUtils v0.3.1
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
@@ -52,31 +52,171 @@ const changeDateFormatLang = () => {
     i18n.timeNames = timeNames();
 };
 
-/**
- * Convert text to slug format for URLs and SEO
- *
- * @param {string} text `string` Text you want to convert
- * @return {string} slug `string`
- * @example
- * OU.convertTextToSlug("Two black horses in the mountain") // Return "two-black-horses-in-the-mountain"
- * OU.convertTextToSlug("What do you want to do today?") // Return "what-do-you-want-to-do-today"
- * OU.convertTextToSlug("Dos caballos negros en la montaña") // Return "dos-caballos-negros-en-la-montana"
- * OU.convertTextToSlug("Két fekete ló a hegyen") // Return "ket-fekete-lo-a-hegyen"
- * OU.convertTextToSlug("@username is the best") // Return "username-is-the-best"
- */
-const convertTextToSlug = (text) => {
-    const input = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
-    const output = 'aaaaaaaaaacccddeeeeeeeegghiiiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
-    const regexp = new RegExp(input.split('').join('|'), 'g');
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(regexp, repl => output.charAt(input.indexOf(repl)))
-        .replace(/&/g, '')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-')
-        .replace(/^-+/, '')
-        .replace(/-+$/, '');
+const time = (lang, plural = false) => {
+    if (lang == 'es-ES')
+        return {
+            ago: 'hace',
+            now: 'justo ahora',
+            lessthanaminute: 'menos de 1 minuto',
+            millisecond: plural ? 'milisegundos' : 'milisegundo',
+            second: plural ? 'segundos' : 'segundo',
+            minute: plural ? 'minutos' : 'minuto',
+            hour: plural ? 'horas' : 'hora',
+            day: plural ? 'días' : 'día',
+            week: plural ? 'semanas' : 'semana',
+            month: plural ? 'meses' : 'mes',
+            year: plural ? 'años' : 'año',
+        };
+    return {
+        ago: 'ago',
+        now: 'just now',
+        lessthanaminute: 'less than a minute',
+        millisecond: plural ? 'milliseconds' : 'millisecond',
+        second: plural ? 'seconds' : 'second',
+        minute: plural ? 'minutes' : 'minute',
+        hour: plural ? 'hours' : 'hour',
+        day: plural ? 'days' : 'day',
+        week: plural ? 'weeks' : 'week',
+        month: plural ? 'months' : 'month',
+        year: plural ? 'years' : 'year',
+    };
 };
+
+const config$1 = getConfig();
+/**
+ * Calculate reading time of text
+ *
+ * @param {string} text `string` Text you want to calculate
+ * @return {number} Time `string` Time. Example: 4.5 minutes
+ * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
+ */
+const calculateReadingTime = (text) => {
+    const lang = config$1.language;
+    let words = text.split(' ');
+    let minutes = words.length / 225;
+    minutes = Math.round(minutes * 10) / 10;
+    if (minutes <= 0)
+        return time(lang).lessthanaminute;
+    if (minutes <= 60)
+        return `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24)
+        return `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}`;
+    const days = Math.floor(hours / 24);
+    if (days < 7)
+        return `${days} ${days > 1 ? time(lang, true).day : time(lang).day}`;
+    // This part may never be used, but it doesn't cost me anything to put it on.
+    // If someone calculates a text so long that it takes more than 1 day to read, please mention me at x.com/ovniroto xD
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4)
+        return `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}`;
+    const months = Math.floor(days / 30);
+    if (months < 12)
+        return `${months} ${months > 1 ? time(lang, true).month : time(lang).month}`;
+    const years = Math.floor(days / 365);
+    return `${years} ${years > 1 ? time(lang, true).year : time(lang).year}`;
+};
+
+/**
+ * Get password strength (bad/medium/good/strong)
+ *
+ * @param {string} password `string` Password
+ * @return {string} (bad/medium/good/strong) `string`
+ * @example
+ * OU.getPasswordStrength("12345") // Return "bad"
+ * OU.getPasswordStrength("qwerty") // Return "bad"
+ * OU.getPasswordStrength("Cxtx@5x") // Return "medium"
+ * OU.getPasswordStrength("LBC&m3vPme") // Return "good"
+ * OU.getPasswordStrength("CxziTy@V#utx5x") // Return "strong"
+ */
+const getPasswordStrength = (password) => {
+    let strong = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){14,20}$/);
+    const checkStrong = strong.test(password);
+    if (checkStrong)
+        return 'strong';
+    let good = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/);
+    const checkGood = good.test(password);
+    if (checkGood)
+        return 'good';
+    let medium = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/);
+    const checkMedium = medium.test(password);
+    if (checkMedium)
+        return 'medium';
+    return 'bad';
+};
+
+const config = getConfig();
+/**
+ * Get relative time of timestamp
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @return {string} time `string`
+ * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
+ */
+const getRelativeTime = (timestamp) => {
+    const lang = config.language;
+    const elapsedTime = (Math.floor(Date.now() / 1000)) - timestamp;
+    if (elapsedTime < 60)
+        return time(lang).now;
+    const seconds = elapsedTime;
+    if (seconds < 60) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second}` : `${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second} ${time(lang).ago}`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}` : `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute} ${time(lang).ago}`;
+    }
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}` : `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour} ${time(lang).ago}`;
+    }
+    const days = Math.floor(hours / 24);
+    if (days < 7) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${days} ${days > 1 ? time(lang, true).day : time(lang).day}` : `${days} ${days > 1 ? time(lang, true).day : time(lang).day} ${time(lang).ago}`;
+    }
+    const weeks = Math.floor(days / 7);
+    if (weeks < 4) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}` : `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week} ${time(lang).ago}`;
+    }
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+        return lang == 'es-ES' ? `${time(lang).ago} ${months} ${months > 1 ? time(lang, true).month : time(lang).month}` : `${months} ${months > 1 ? time(lang, true).month : time(lang).month} ${time(lang).ago}`;
+    }
+    const years = Math.floor(days / 365);
+    const timeAgo = lang == 'es-ES' ? `${time(lang).ago} ${years} ${years > 1 ? time(lang, true).year : time(lang).year}` : `${years} ${years > 1 ? time(lang, true).year : time(lang).year} ${time(lang).ago}`;
+    return timeAgo;
+};
+
+/**
+ * Get unix timestamp in seconds (default) or milliseconds
+ *
+ * @param {number} milliseconds `boolean` Get unix timestamp in milliseconds (Default: false)
+ * @return {number} `number` Unix timestamp in seconds or milliseconds
+ * @example OU.getTimestamp() // Return format 1695593795 (unix timestamp in seconds)
+ * @example OU.getTimestamp(true) // Return format 1695593795399 (unix timestamp in milliseconds)
+ */
+const getTimestamp = (milliseconds = false) => {
+    return milliseconds ? Date.now() : (Math.floor(Date.now() / 1000.0));
+};
+
+/**
+ * Remove HTML from string
+ *
+ * @param {format} html `string` HTML string
+ * @return {string} text without html `string`
+ * @example OU.removeHTML("<html><body>Hello World!</body></html>") // Return "Hello World!"
+ */
+const removeHTML = (html) => {
+    return html.replace(/<[^>]*>?/gm, '');
+};
+
+/**
+ * Stop code execution for as long as you need
+ *
+ * @param {format} milliseconds `number` Milliseconds. Example: 300
+ * @example OU.sleep(300) // Sleep 300 milliseconds
+ */
+const sleep = (milliseconds) => new Promise((r) => setTimeout(r, milliseconds));
 
 /**
  * Extract information of base64 file data
@@ -187,13 +327,13 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
 };
 
 /**
- * Extract Base64 data of File or Blob
+ * Convert File or Blob to Base64 data
  *
  * @param {number} file `File` or `Blob` File or Blob data
  * @return {boolean} base64 `string` Base64 data
- * @example OU.extractBase64FileData([File]) // Return data:[<mediatype>][;base64],<data>
+ * @example OU.convertFileToBase64([File]) // Return data:[<mediatype>][;base64],<data>
  */
-const extractBase64FileData = (file) => __awaiter(void 0, void 0, void 0, function* () {
+const convertFileToBase64 = (file) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onend = reject;
@@ -202,6 +342,109 @@ const extractBase64FileData = (file) => __awaiter(void 0, void 0, void 0, functi
         reader.onloadend = () => resolve(reader.result);
     });
 });
+
+/**
+ * Convert date to timestamp
+ *
+ * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
+ * @return {number} timestamp `number`
+ * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
+ */
+const convertDateToTimestamp = (datetime) => {
+    let date = [];
+    let timestamp = 0;
+    if (datetime.includes('-'))
+        date = datetime.split('-');
+    if (datetime.includes('/'))
+        date = datetime.split('/');
+    if (datetime.includes(" ")) {
+        const [d, t] = datetime.split(" ");
+        const time = t.split(":");
+        if (datetime.includes('-'))
+            date = d.split('-');
+        if (datetime.includes('/'))
+            date = d.split('/');
+        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]), parseInt(time[0]), parseInt(time[1])).getTime();
+    }
+    else {
+        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0])).getTime();
+    }
+    return timestamp / 1000;
+};
+
+/**
+ * Convert timestamp to date
+ *
+ * @param {number} timestamp `number` Example: 1695398400
+ * @param {string} separator `string` Example: "/"
+ * @param {boolean} includeTime `boolean` Example: true
+ * @return {string} date `string` Example: "22/09/2023 18:00"
+ * @example OU.convertTimestampToDate(1695398400) // Return "22/09/2023 18:00"
+ */
+const convertTimestampToDate = (timestamp, separator = "-", includeTime = false) => {
+    let time = '';
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDay();
+    if (includeTime) {
+        const arrTime = [];
+        arrTime[0] = date.getHours();
+        arrTime[1] = date.getMinutes();
+        time = ` ${arrTime[0]}:${arrTime[1]}`;
+    }
+    return `${day}${separator}${month}${separator}${year}${time}`;
+};
+
+/**
+ * Convert text to slug format for URLs and SEO
+ *
+ * @param {string} text `string` Text you want to convert
+ * @return {string} slug `string`
+ * @example
+ * OU.convertTextToSlug("Two black horses in the mountain") // Return "two-black-horses-in-the-mountain"
+ * OU.convertTextToSlug("What do you want to do today?") // Return "what-do-you-want-to-do-today"
+ * OU.convertTextToSlug("Dos caballos negros en la montaña") // Return "dos-caballos-negros-en-la-montana"
+ * OU.convertTextToSlug("Két fekete ló a hegyen") // Return "ket-fekete-lo-a-hegyen"
+ * OU.convertTextToSlug("@username is the best") // Return "username-is-the-best"
+ */
+const convertTextToSlug = (text) => {
+    const input = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
+    const output = 'aaaaaaaaaacccddeeeeeeeegghiiiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------';
+    const regexp = new RegExp(input.split('').join('|'), 'g');
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(regexp, repl => output.charAt(input.indexOf(repl)))
+        .replace(/&/g, '')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+};
+
+/**
+ * Format actual date
+ *
+ * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
+ * @return {string} date `string` Actual date formatted
+ * @example OU.formatActualDate("dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
+ */
+const formatActualDate = (format) => {
+    return dateFormat(new Date(), format);
+};
+
+/**
+ * Format timestamp to date
+ *
+ * @param {number} timestamp `number` Unix timestamp in seconds
+ * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
+ * @return {string} date `string` Timestamp date formatted
+ * @example OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
+ */
+const formatTimestamp = (timestamp, format) => {
+    const date = new Date(timestamp * 1000);
+    return dateFormat(date, format);
+};
 
 /**
  * Format bytes (5232000 -> "4.99 MB")
@@ -218,17 +461,6 @@ const formatBytes = (bytes, decimals = 2) => {
     const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-};
-
-/**
- * Remove HTML from string
- *
- * @param {format} html `string` HTML string
- * @return {string} text without html `string`
- * @example OU.removeHTML("<html><body>Hello World!</body></html>") // Return "Hello World!"
- */
-const removeHTML = (html) => {
-    return html.replace(/<[^>]*>?/gm, '');
 };
 
 /**
@@ -355,256 +587,10 @@ const generateNumberBetween = (min, max) => {
 };
 
 /**
- * Get password strength (bad/medium/good/strong)
- *
- * @param {string} password `string` Password
- * @return {string} (bad/medium/good/strong) `string`
- * @example
- * OU.getPasswordStrength("12345") // Return "bad"
- * OU.getPasswordStrength("qwerty") // Return "bad"
- * OU.getPasswordStrength("Cxtx@5x") // Return "medium"
- * OU.getPasswordStrength("LBC&m3vPme") // Return "good"
- * OU.getPasswordStrength("CxziTy@V#utx5x") // Return "strong"
- */
-const getPasswordStrength = (password) => {
-    let strong = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){14,20}$/);
-    const checkStrong = strong.test(password);
-    if (checkStrong)
-        return 'strong';
-    let good = new RegExp(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/);
-    const checkGood = good.test(password);
-    if (checkGood)
-        return 'good';
-    let medium = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/);
-    const checkMedium = medium.test(password);
-    if (checkMedium)
-        return 'medium';
-    return 'bad';
-};
-
-const time = (lang, plural = false) => {
-    if (lang == 'es-ES')
-        return {
-            ago: 'hace',
-            now: 'justo ahora',
-            lessthanaminute: 'menos de 1 minuto',
-            millisecond: plural ? 'milisegundos' : 'milisegundo',
-            second: plural ? 'segundos' : 'segundo',
-            minute: plural ? 'minutos' : 'minuto',
-            hour: plural ? 'horas' : 'hora',
-            day: plural ? 'días' : 'día',
-            week: plural ? 'semanas' : 'semana',
-            month: plural ? 'meses' : 'mes',
-            year: plural ? 'años' : 'año',
-        };
-    return {
-        ago: 'ago',
-        now: 'just now',
-        lessthanaminute: 'less than a minute',
-        millisecond: plural ? 'milliseconds' : 'millisecond',
-        second: plural ? 'seconds' : 'second',
-        minute: plural ? 'minutes' : 'minute',
-        hour: plural ? 'hours' : 'hour',
-        day: plural ? 'days' : 'day',
-        week: plural ? 'weeks' : 'week',
-        month: plural ? 'months' : 'month',
-        year: plural ? 'years' : 'year',
-    };
-};
-
-const config$1 = getConfig();
-/**
- * Calculate reading time of text
- *
- * @param {string} text `string` Text you want to calculate
- * @return {number} minutes `string` Time. Example: 4.5 minutes
- * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
- */
-const calculateReadingTime = (text) => {
-    const lang = config$1.language;
-    let words = text.split(' ');
-    let minutes = words.length / 225;
-    minutes = Math.round(minutes * 10) / 10;
-    if (minutes <= 0)
-        return time(lang).lessthanaminute;
-    if (minutes <= 60)
-        return `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24)
-        return `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}`;
-    const days = Math.floor(hours / 24);
-    if (days < 7)
-        return `${days} ${days > 1 ? time(lang, true).day : time(lang).day}`;
-    // This part may never be used, but it doesn't cost me anything to put it on.
-    // If someone calculates a text so long that it takes more than 1 day to read, please mention me at x.com/ovniroto xD
-    const weeks = Math.floor(days / 7);
-    if (weeks < 4)
-        return `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}`;
-    const months = Math.floor(days / 30);
-    if (months < 12)
-        return `${months} ${months > 1 ? time(lang, true).month : time(lang).month}`;
-    const years = Math.floor(days / 365);
-    return `${years} ${years > 1 ? time(lang, true).year : time(lang).year}`;
-};
-
-/**
- * Convert date to timestamp
- *
- * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
- * @return {number} timestamp `number`
- * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
- */
-const convertDateToTimestamp = (datetime) => {
-    let date = [];
-    let timestamp = 0;
-    if (datetime.includes('-'))
-        date = datetime.split('-');
-    if (datetime.includes('/'))
-        date = datetime.split('/');
-    if (datetime.includes(" ")) {
-        const [d, t] = datetime.split(" ");
-        const time = t.split(":");
-        if (datetime.includes('-'))
-            date = d.split('-');
-        if (datetime.includes('/'))
-            date = d.split('/');
-        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]), parseInt(time[0]), parseInt(time[1])).getTime();
-    }
-    else {
-        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0])).getTime();
-    }
-    return timestamp / 1000;
-};
-
-/**
- * Convert timestamp to date
- *
- * @param {number} timestamp `number` Example: 1695398400
- * @param {string} separator `string` Example: "/"
- * @param {boolean} includeTime `boolean` Example: true
- * @return {string} date `string` Example: "22/09/2023 18:00"
- * @example OU.convertTimestampToDate(1695398400) // Return "22/09/2023 18:00"
- */
-const convertTimestampToDate = (timestamp, separator = "-", includeTime = false) => {
-    let time = '';
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDay();
-    if (includeTime) {
-        const arrTime = [];
-        arrTime[0] = date.getHours();
-        arrTime[1] = date.getMinutes();
-        time = ` ${arrTime[0]}:${arrTime[1]}`;
-    }
-    return `${day}${separator}${month}${separator}${year}${time}`;
-};
-
-/**
- * Format actual date
- *
- * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
- * @return {string} date `string`
- * @example OU.formatActualDate("dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
- */
-const formatActualDate = (format) => {
-    return dateFormat(new Date(), format);
-};
-
-/**
- * Format timestamp to date
- *
- * @param {number} timestamp `number` Unix timestamp in seconds
- * @param {format} format `string` Format options: https://www.npmjs.com/package/dateformat
- * @return {string} date `string`
- * @example OU.formatTimestamp(1695371156, "dddd, mmmm dS, yyyy, h:MM:ss TT") // Return "Friday, September 22nd, 2023, 10:25:56 AM"
- */
-const formatTimestamp = (timestamp, format) => {
-    const date = new Date(timestamp * 1000);
-    return dateFormat(date, format);
-};
-
-const config = getConfig();
-/**
- * Get relative time of timestamp
- *
- * @param {number} timestamp `number` Unix timestamp in seconds
- * @return {string} relative time `string`
- * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
- */
-const getRelativeTime = (timestamp) => {
-    const lang = config.language;
-    const elapsedTime = (Math.floor(Date.now() / 1000)) - timestamp;
-    if (elapsedTime < 60)
-        return time(lang).now;
-    const seconds = elapsedTime;
-    if (seconds < 60) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second}` : `${seconds} ${seconds > 1 ? time(lang, true).second : time(lang).second} ${time(lang).ago}`;
-    }
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute}` : `${minutes} ${minutes > 1 ? time(lang, true).minute : time(lang).minute} ${time(lang).ago}`;
-    }
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour}` : `${hours} ${hours > 1 ? time(lang, true).hour : time(lang).hour} ${time(lang).ago}`;
-    }
-    const days = Math.floor(hours / 24);
-    if (days < 7) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${days} ${days > 1 ? time(lang, true).day : time(lang).day}` : `${days} ${days > 1 ? time(lang, true).day : time(lang).day} ${time(lang).ago}`;
-    }
-    const weeks = Math.floor(days / 7);
-    if (weeks < 4) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week}` : `${weeks} ${weeks > 1 ? time(lang, true).week : time(lang).week} ${time(lang).ago}`;
-    }
-    const months = Math.floor(days / 30);
-    if (months < 12) {
-        return lang == 'es-ES' ? `${time(lang).ago} ${months} ${months > 1 ? time(lang, true).month : time(lang).month}` : `${months} ${months > 1 ? time(lang, true).month : time(lang).month} ${time(lang).ago}`;
-    }
-    const years = Math.floor(days / 365);
-    const timeAgo = lang == 'es-ES' ? `${time(lang).ago} ${years} ${years > 1 ? time(lang, true).year : time(lang).year}` : `${years} ${years > 1 ? time(lang, true).year : time(lang).year} ${time(lang).ago}`;
-    return timeAgo;
-};
-
-/**
- * Get unix timestamp in seconds (default) or milliseconds
- *
- * @param {number} milliseconds `boolean` Get unix timestamp in milliseconds (Default: false)
- * @return {number} `number` Unix timestamp in seconds or milliseconds
- * @example OU.getTimestamp() // Return format 1695593795 (unix timestamp in seconds)
- * @example OU.getTimestamp(true) // Return format 1695593795399 (unix timestamp in milliseconds)
- */
-const getTimestamp = (milliseconds = false) => {
-    return milliseconds ? Date.now() : (Math.floor(Date.now() / 1000.0));
-};
-
-/**
- * Checks if a unix timestamp has expired relative to the current date.
- *
- * @param {number} timestamp `number` Unix timestamp in seconds or milliseconds
- * @param {number} milliseconds `boolean` Activate it if you are going to check a timestamp in milliseconds
- * @return {boolean} true/false `boolean`
- * @example OU.isTimestampExpired(1695371156) // Return true
- * @example OU.isTimestampExpired(1695593795399, true) // Return true
- * @example OU.isTimestampExpired(2863283114) // Return false
- */
-const isTimestampExpired = (timestamp, milliseconds = false) => {
-    return milliseconds ? (Date.now() > timestamp) : (Math.floor(Date.now() / 1000) > timestamp);
-};
-
-/**
- * Sleep
- *
- * @param {format} milliseconds `number` Milliseconds. Example: 300
- * @example OU.sleep(300) // Sleep 300 milliseconds
- */
-const sleep = (milliseconds) => new Promise((r) => setTimeout(r, milliseconds));
-
-/**
  * Checks if text contain digits
  *
- * @param {string} text `string` Text
- * @return {boolean} true/false `boolean`
+ * @param {string} text `string` Text you want to check
+ * @return {boolean} true/false `boolean` Returns true or false depending on whether the text contains digits or not
  * @example
  * OU.containDigits("Area51") // Return true
  * OU.containDigits("ovni") // Return false
@@ -616,8 +602,8 @@ const containDigits = (text) => {
 /**
  * Check if text contain normalcase letters
  *
- * @param {string} text `string` Text
- * @return {string} true/false `boolean`
+ * @param {string} text `string` Text you want to check
+ * @return {string} true/false `boolean` Returns true or false depending on whether the text contains normalcase letters or not
  * @example
  * OU.containNormalcaseLetters("text with normalcase letters") // Return true
  * OU.containNormalcaseLetters("Text With Normalcase And Uppercase Letters") // Return true
@@ -671,6 +657,29 @@ const isEmailValid = (email) => {
 };
 
 /**
+ * Checks if username is valid
+ *
+ * @param {string} username `string` Username
+ * @param {number} minLength `number` Minimum length
+ * @param {number} maxLength `number` Maximum length
+ * @param {Array[string]} charactersAllowed `array[string]` Characters allowed. Allowed values: ['a-z','A-Z','0-9','_']
+ * @return {boolean} true/false `boolean`
+ * @example
+ * OU.isUsernameValid("username", 3, 20, ['az','AZ','09','_']) // Return true
+ * OU.isUsernameValid("user.name", 3, 20, ['az','AZ','09','_']) // Return false
+ * OU.isUsernameValid("username", 1, 5, ['az','AZ','09','_']) // Return false
+ * OU.isUsernameValid("12345awsd", 3, 10, ['az','AZ','09','_']) // Return true
+ * OU.isUsernameValid("ovni.dev", 3, 10, ['az','AZ','.']) // Return true
+ * OU.isUsernameValid("dev", 3, 10) // Return true
+ */
+const isUsernameValid = (username, minLength = 3, maxLength = 20, charactersAllowed = []) => {
+    let charactersRegexp = '';
+    charactersAllowed.forEach((char) => { charactersRegexp += char; });
+    const validRegexp = new RegExp(`^${charactersRegexp ? '[' + charactersRegexp + ']' : '[a-z]'}{${minLength},${maxLength}}$`);
+    return validRegexp.test(username);
+};
+
+/**
  * Checks if password is valid
  *
  * @param {string} password `string` Password
@@ -698,26 +707,17 @@ const isPasswordValid = (password, minLength = 3, maxLength = 30, charactersRequ
 };
 
 /**
- * Checks if username is valid
+ * Checks if a unix timestamp has expired relative to the current date.
  *
- * @param {string} username `string` Username
- * @param {number} minLength `number` Minimum length
- * @param {number} maxLength `number` Maximum length
- * @param {Array[string]} charactersAllowed `array[string]` Characters allowed. Allowed values: ['a-z','A-Z','0-9','_']
+ * @param {number} timestamp `number` Unix timestamp in seconds or milliseconds
+ * @param {number} milliseconds `boolean` Activate it if you are going to check a timestamp in milliseconds
  * @return {boolean} true/false `boolean`
- * @example
- * OU.isUsernameValid("username", 3, 20, ['az','AZ','09','_']) // Return true
- * OU.isUsernameValid("user.name", 3, 20, ['az','AZ','09','_']) // Return false
- * OU.isUsernameValid("username", 1, 5, ['az','AZ','09','_']) // Return false
- * OU.isUsernameValid("12345awsd", 3, 10, ['az','AZ','09','_']) // Return true
- * OU.isUsernameValid("ovni.dev", 3, 10, ['az','AZ','.']) // Return true
- * OU.isUsernameValid("dev", 3, 10) // Return true
+ * @example OU.isTimestampExpired(1695371156) // Return true
+ * @example OU.isTimestampExpired(1695593795399, true) // Return true
+ * @example OU.isTimestampExpired(2863283114) // Return false
  */
-const isUsernameValid = (username, minLength = 3, maxLength = 20, charactersAllowed = []) => {
-    let charactersRegexp = '';
-    charactersAllowed.forEach((char) => { charactersRegexp += char; });
-    const validRegexp = new RegExp(`^${charactersRegexp ? '[' + charactersRegexp + ']' : '[a-z]'}{${minLength},${maxLength}}$`);
-    return validRegexp.test(username);
+const isTimestampExpired = (timestamp, milliseconds = false) => {
+    return milliseconds ? (Date.now() > timestamp) : (Math.floor(Date.now() / 1000) > timestamp);
 };
 
-export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, extractBase64Data as convertBase64Data, convertDateToTimestamp, convertTextToSlug, convertTimestampToDate, extractBase64FileData, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };
+export { calculateReadingTime, containDigits, containNormalcaseLetters, containSpecialChars, containUppercaseLetters, extractBase64Data as convertBase64Data, convertDateToTimestamp, convertFileToBase64, convertTextToSlug, convertTimestampToDate, formatActualDate, formatBytes, formatTimestamp, generateCode, generateId, generateNumberBetween, getConfig, getPasswordStrength, getRelativeTime, getTimestamp, isEmailValid, isPasswordValid, isTimestampExpired, isUsernameValid, removeHTML, setConfig, sleep };

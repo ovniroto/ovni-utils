@@ -1,7 +1,7 @@
 {
     "name": "ovni-utils",
-    "version": "0.3.0",
-    "description": "Specific useful functions.",
+    "version": "0.3.1",
+    "description": "Small library with utilities.",
     "keywords": [
         "ovni",
         "ovniutils",
@@ -32,7 +32,8 @@
         "dist"
     ],
     "scripts": {
-        "build": "npm run clean && npm run bundle",
+        "build": "npm run clean && npm run setup && npm run bundle",
+        "setup": "node ./build/setup.js",
         "clean": "rimraf dist",
         "bundle": "npm-run-all bundle:**",
         "bundle:umd": "rollup -c --bundleConfigAsCjs",

@@ -1,5 +1,12 @@
 # Changelog
 
+### 0.3.1
+
+Release 25 sep 2023
+
+  * Rename `extractBase64FileData` to [`convertFileToBase64`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertFileToBase64)
+  * Other project structure stuff
+
 ### 0.3.0
 
 Release 25 sep 2023
@@ -25,7 +32,7 @@ Release 25 sep 2023
   * Add [`getTimestamp`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#getTimestamp) to `time` related utils
   * Add [`sleep`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#sleep) to `time` related utils
 
-  * Rename `extractBase64Data` to [`convertBase64Data`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertBase64Data) to `converters` related utils
+  * Rename `extractBase64Data` to [`convertBase64Data`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertBase64Data)
 
 ### 0.2.2
 

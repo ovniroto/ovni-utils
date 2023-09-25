@@ -7,7 +7,7 @@ const config = getConfig()
  * Get relative time of timestamp
  *
  * @param {number} timestamp `number` Unix timestamp in seconds
- * @return {string} relative time `string`
+ * @return {string} time `string`
  * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
  */
 const getRelativeTime = (timestamp: number): string => {

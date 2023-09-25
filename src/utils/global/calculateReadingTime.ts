@@ -7,7 +7,7 @@ const config = getConfig()
  * Calculate reading time of text
  *
  * @param {string} text `string` Text you want to calculate
- * @return {number} minutes `string` Time. Example: 4.5 minutes
+ * @return {number} Time `string` Time. Example: 4.5 minutes
  * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
  */
 const calculateReadingTime = (text: any): string => {

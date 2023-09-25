@@ -1,8 +1,8 @@
 /**
  * Check if text contain normalcase letters
  *
- * @param {string} text `string` Text
- * @return {string} true/false `boolean`
+ * @param {string} text `string` Text you want to check
+ * @return {string} true/false `boolean` Returns true or false depending on whether the text contains normalcase letters or not
  * @example
  * OU.containNormalcaseLetters("text with normalcase letters") // Return true
  * OU.containNormalcaseLetters("Text With Normalcase And Uppercase Letters") // Return true
