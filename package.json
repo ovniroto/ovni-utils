@@ -19,9 +19,7 @@
     },
     "type": "module",
     "main": "dist/ovniutils.js",
-    "unpkg": "dist/ovniutils.min.js",
     "jsdelivr": "dist/ovniutils.min.js",
-    "browser": "dist/ovniutils.min.js",
     "types": "src/index.d.ts",
     "homepage": "https://github.com/ovniroto/ovni-utils",
     "repository": {
