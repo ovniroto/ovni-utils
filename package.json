@@ -1,6 +1,6 @@
 {
     "name": "ovni-utils",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "description": "Small library with utilities.",
     "keywords": [
         "ovni",
@@ -18,7 +18,7 @@
         "url": "https://ovni.dev"
     },
     "type": "module",
-    "main": "src/index.ts",
+    "main": "dist/ovniutils.js",
     "unpkg": "dist/ovniutils.min.js",
     "jsdelivr": "dist/ovniutils.min.js",
     "browser": "dist/ovniutils.min.js",
