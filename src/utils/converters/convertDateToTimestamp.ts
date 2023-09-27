@@ -18,7 +18,7 @@ const convertDateToTimestamp = (date: string, time?: string): number => {
     const day = parseInt((date[0].length == 2) ? date[0] : date[2])
     const year = parseInt((date[0].length == 4) ? date[0] : date[2])
     const month = parseInt(date[1]) - 1
-
+    
     const hours = time ? parseInt(time[0]) : 0
     const minutes = time ? parseInt(time[1]) : 0
 
@@ -27,5 +27,4 @@ const convertDateToTimestamp = (date: string, time?: string): number => {
     return timestamp / 1000
 
 }
-
 export default convertDateToTimestamp

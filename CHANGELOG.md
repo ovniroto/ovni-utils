@@ -1,5 +1,17 @@
 # Changelog
 
+### 0.4.9
+
+Release 28 sep 2023
+
+  * Some build fixes
+
+### 0.4.8
+
+Release 27 sep 2023
+
+  * Add `time` param to `convertDateToTimestamp` function
+
 ### 0.4.7
 
 Release 27 sep 2023
