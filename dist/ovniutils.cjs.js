@@ -1,6 +1,6 @@
 /*
  *
- *  OvniUtils v0.4.9
+ *  OvniUtils v0.4.10
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
@@ -425,15 +425,16 @@ const convertRGBToHex = (r, g, b) => {
  * @example OU.convertDateToTimestamp("22/09/2023","18:00") // Return 1695398400
  */
 const convertDateToTimestamp = (date, time) => {
+    let datePaths = [];
     let timestamp = 0;
     time ? time.split(":") : null;
     if (date.includes('-'))
-        date.split('-');
+        datePaths = date.split('-');
     if (date.includes('/'))
-        date.split('/');
-    const day = parseInt((date[0].length == 2) ? date[0] : date[2]);
-    const year = parseInt((date[0].length == 4) ? date[0] : date[2]);
-    const month = parseInt(date[1]) - 1;
+        datePaths = date.split('/');
+    const day = parseInt((datePaths[0].length == 2) ? datePaths[0] : datePaths[2]);
+    const year = parseInt((datePaths[0].length == 4) ? datePaths[0] : datePaths[2]);
+    const month = parseInt(datePaths[1]) - 1;
     const hours = time ? parseInt(time[0]) : 0;
     const minutes = time ? parseInt(time[1]) : 0;
     timestamp = new Date(year, month, day, hours, minutes).getTime();

@@ -8,16 +8,17 @@
  */
 const convertDateToTimestamp = (date: string, time?: string): number => {
 
+    let datePaths: string[] = []
     let timestamp = 0
 
     time ? time.split(":") as unknown as string[] : null
 
-    if(date.includes('-')) date.split('-') as unknown as string[]
-    if(date.includes('/')) date.split('/') as unknown as string[]
+    if(date.includes('-')) datePaths = date.split('-') as unknown as string[]
+    if(date.includes('/')) datePaths = date.split('/') as unknown as string[]
 
-    const day = parseInt((date[0].length == 2) ? date[0] : date[2])
-    const year = parseInt((date[0].length == 4) ? date[0] : date[2])
-    const month = parseInt(date[1]) - 1
+    const day = parseInt((datePaths[0].length == 2) ? datePaths[0] : datePaths[2])
+    const year = parseInt((datePaths[0].length == 4) ? datePaths[0] : datePaths[2])
+    const month = parseInt(datePaths[1]) - 1
     
     const hours = time ? parseInt(time[0]) : 0
     const minutes = time ? parseInt(time[1]) : 0
