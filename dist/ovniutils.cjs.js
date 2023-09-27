@@ -419,19 +419,18 @@ const convertRGBToHex = (r, g, b) => {
 /**
  * Convert date to timestamp
  *
- * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
+ * @param {string} date `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY"
+ * @param {string} time `string` Time in format "HH:MM"
  * @return {number} timestamp `number`
- * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
+ * @example OU.convertDateToTimestamp("22/09/2023","18:00") // Return 1695398400
  */
-const convertDateToTimestamp = (datetime) => {
-    const [d, t] = datetime.split(" ");
-    let date = [];
+const convertDateToTimestamp = (date, time) => {
     let timestamp = 0;
-    const time = t ? t.split(":") : null;
-    if (datetime.includes('-'))
-        date = d ? d.split('-') : datetime.split('-');
-    if (datetime.includes('/'))
-        date = d ? d.split('/') : datetime.split('/');
+    time ? time.split(":") : null;
+    if (date.includes('-'))
+        date.split('-');
+    if (date.includes('/'))
+        date.split('/');
     const day = parseInt((date[0].length == 2) ? date[0] : date[2]);
     const year = parseInt((date[0].length == 4) ? date[0] : date[2]);
     const month = parseInt(date[1]) - 1;

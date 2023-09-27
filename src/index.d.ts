@@ -33,11 +33,12 @@ export declare const convertBase64ToFile: (base64: string) => Uint8Array;
 /**
  * Convert date to timestamp
  *
- * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
+ * @param {string} date `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY"
+ * @param {string} time `string` Time in format "HH:MM"
  * @return {number} timestamp `number`
- * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
+ * @example OU.convertDateToTimestamp("22/09/2023","18:00") // Return 1695398400
  */
-export declare const convertDateToTimestamp: (datetime: string) => number;
+export declare const convertDateToTimestamp: (date: string, time?: string) => number;
 
 /**
  * Convert File or Blob to Base64 data

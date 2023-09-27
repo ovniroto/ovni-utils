@@ -1,21 +1,19 @@
 /**
  * Convert date to timestamp
  *
- * @param {string} datetime `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY" or "DD-MM-YYYY 00:00:00" or "DD/MM/YYYY 00:00:00"
+ * @param {string} date `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY"
+ * @param {string} time `string` Time in format "HH:MM"
  * @return {number} timestamp `number`
- * @example OU.convertDateToTimestamp("22/09/2023 18:00") // Return 1695398400
+ * @example OU.convertDateToTimestamp("22/09/2023","18:00") // Return 1695398400
  */
-const convertDateToTimestamp = (datetime: string): number => {
+const convertDateToTimestamp = (date: string, time?: string): number => {
 
-    const [ d, t ] = datetime.split(" ") as string[]
-
-    let date = [] as unknown as string[]
     let timestamp = 0
 
-    const time = t ? t.split(":") as unknown as string[] : null
+    time ? time.split(":") as unknown as string[] : null
 
-    if(datetime.includes('-')) date = d ? d.split('-') as unknown as string[] : datetime.split('-') as unknown as string[]
-    if(datetime.includes('/')) date = d ? d.split('/') as unknown as string[] : datetime.split('/') as unknown as string[]
+    if(date.includes('-')) date.split('-') as unknown as string[]
+    if(date.includes('/')) date.split('/') as unknown as string[]
 
     const day = parseInt((date[0].length == 2) ? date[0] : date[2])
     const year = parseInt((date[0].length == 4) ? date[0] : date[2])
