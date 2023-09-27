@@ -7,27 +7,24 @@
  */
 const convertDateToTimestamp = (datetime: string): number => {
 
+    const [ d, t ] = datetime.split(" ") as string[]
+
     let date = [] as unknown as string[]
     let timestamp = 0
 
-    if(datetime.includes('-')) date = datetime.split('-') as unknown as string[]
-    if(datetime.includes('/')) date = datetime.split('/') as unknown as string[]
+    const time = t ? t.split(":") as unknown as string[] : null
 
-    if(datetime.includes(" ")) {
+    if(datetime.includes('-')) date = d ? d.split('-') as unknown as string[] : datetime.split('-') as unknown as string[]
+    if(datetime.includes('/')) date = d ? d.split('/') as unknown as string[] : datetime.split('/') as unknown as string[]
 
-        const [ d, t ] = datetime.split(" ") as string[]
-        const time = t.split(":") as unknown as string[]
+    const day = parseInt((date[0].length == 2) ? date[0] : date[2])
+    const year = parseInt((date[0].length == 4) ? date[0] : date[2])
+    const month = parseInt(date[1]) - 1
 
-        if(datetime.includes('-')) date = d.split('-') as unknown as string[]
-        if(datetime.includes('/')) date = d.split('/') as unknown as string[]
+    const hours = time ? parseInt(time[0]) : 0
+    const minutes = time ? parseInt(time[1]) : 0
 
-        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]), parseInt(time[0]), parseInt(time[1])).getTime() as number
-
-    } else {
-
-        timestamp = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0])).getTime() as number
-
-    }
+    timestamp = new Date(year, month, day, hours, minutes).getTime() as number
 
     return timestamp / 1000
 

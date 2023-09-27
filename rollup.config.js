@@ -17,17 +17,34 @@ const banner = '/*\n'
 
 const config = {
 	input: './src/index.ts',
-	output: {
-			file: `${dist}/${bundleName}.js`,
-			format: 'esm',
-			banner: banner,
-	},
 	plugins: [
-		nodeResolve({}),
-		typescript({
-			tsconfig: './tsconfig.json'
-		})
+		typescript({ tsconfig: './tsconfig.json' })
 	]
+}
+
+if(process.env.NODE_ENV === 'cjs') {
+	config.output = {
+		file: `${dist}/${bundleName}.cjs.js`,
+		format: 'cjs',
+		banner: banner,
+	}
+}
+
+if(process.env.NODE_ENV === 'umd') {
+	config.output = {
+		file: `${dist}/${bundleName}.umd.js`,
+		format: 'umd',
+		name: 'OU',
+		banner: banner,
+	}
+}
+
+if(process.env.NODE_ENV === 'esm') {
+	config.output = {
+		file: `${dist}/${bundleName}.esm.js`,
+		format: 'esm',
+		banner: banner,
+	}
 }
 
 if(process.env.NODE_ENV === 'minify') {
@@ -35,7 +52,6 @@ if(process.env.NODE_ENV === 'minify') {
 		file: `${dist}/${bundleName}.min.js`,
 		format: 'iife',
 		name: 'OU',
-		banner: banner,
 	}
 	config.plugins.push(nodeResolve({ browser: true }));
 	config.plugins.push(terser({}));

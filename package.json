@@ -1,6 +1,6 @@
 {
     "name": "ovni-utils",
-    "version": "0.4.6",
+    "version": "0.4.7",
     "description": "Small library with utilities.",
     "keywords": [
         "ovni",
@@ -18,7 +18,7 @@
         "url": "https://ovni.dev"
     },
     "type": "module",
-    "main": "dist/ovniutils.js",
+    "main": "dist/ovniutils.esm.js",
     "jsdelivr": "dist/ovniutils.min.js",
     "types": "src/index.d.ts",
     "homepage": "https://github.com/ovniroto/ovni-utils",
@@ -35,7 +35,9 @@
         "setup": "node ./build/setup.js",
         "clean": "rimraf dist",
         "bundle": "npm-run-all bundle:**",
-        "bundle:umd": "rollup -c --bundleConfigAsCjs",
+        "bundle:cjs": "cross-env NODE_ENV=cjs rollup -c --bundleConfigAsCjs",
+        "bundle:umd": "cross-env NODE_ENV=umd rollup -c --bundleConfigAsCjs",
+        "bundle:esm": "cross-env NODE_ENV=esm rollup -c --bundleConfigAsCjs",
         "bundle:umd:min": "cross-env NODE_ENV=minify rollup -c --bundleConfigAsCjs"
     },
     "devDependencies": {

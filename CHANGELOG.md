@@ -1,5 +1,18 @@
 # Changelog
 
+### 0.4.7
+
+Release 27 sep 2023
+
+  * Add `cjs`, `esm` and `umd` builds to dist
+  * Modify `convertDateToTimestamp` to accept two date formats: `yyyy-mm-dd` and `dd-mm-yyyy`
+
+### 0.4.6
+
+Release 26 sep 2023
+
+  * Some build fixes
+
 ### 0.4.0
 
 Release 25 sep 2023
