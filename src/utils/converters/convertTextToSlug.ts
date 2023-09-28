@@ -3,6 +3,7 @@
  *
  * @param {string} text `string` Text you want to convert
  * @return {string} slug `string`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertTextToSlug | Recipebook `convertTextToSlug`}
  * @example 
  * OU.convertTextToSlug("Two black horses in the mountain") // Return "two-black-horses-in-the-mountain"
  * OU.convertTextToSlug("What do you want to do today?") // Return "what-do-you-want-to-do-today"

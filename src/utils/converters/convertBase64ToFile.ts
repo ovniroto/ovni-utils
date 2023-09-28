@@ -3,6 +3,7 @@
  *
  * @param {number} base64 `string` Base64
  * @return {boolean} File Binary `Uint8Array` File Binary (Uint8Array)
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertBase64ToFile | Recipebook `convertBase64ToFile`}
  * @example OU.convertBase64ToFile("/9j/4Rh3RXhpZgAATU0AKgAAA...") // Return Uint8Array [ 82, 235, 123, 11, ... ]
  */
 const convertBase64ToFile = (base64: string): Uint8Array => {

@@ -3,6 +3,7 @@
  *
  * @param {string} password `string` Password
  * @return {string} (bad/medium/good/strong) `string`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#getPasswordStrength | Recipebook `getPasswordStrength`}
  * @example
  * OU.getPasswordStrength("12345") // Return "bad"
  * OU.getPasswordStrength("qwerty") // Return "bad"

@@ -3,6 +3,7 @@
  *
  * @param {string} text `string` Text
  * @return {string} true/false `boolean`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#containUppercaseLetters | Recipebook `containUppercaseLetters`}
  * @example
  * OU.containUppercaseLetters("TEXT WITH UPPERCASE LETTERS") // Return true
  * OU.containUppercaseLetters("Text With Normalcase And Uppercase Letters") // Return true

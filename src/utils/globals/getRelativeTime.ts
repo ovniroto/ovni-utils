@@ -1,6 +1,7 @@
 import { getConfig } from '@config'
 import { time } from '@language/time'
-import { Lang } from '@types'
+
+type Lang = 'es-ES' | 'en-EN'
 
 const config = getConfig()
 
@@ -9,6 +10,7 @@ const config = getConfig()
  *
  * @param {number} timestamp `number` Unix timestamp in seconds
  * @return {string} time `string`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#getRelativeTime | Recipebook `getRelativeTime`}
  * @example OU.getRelativeTime(1695371156) // Return format "1 day ago"
  */
 const getRelativeTime = (timestamp: number): string => {

@@ -5,6 +5,7 @@
  * @param {number} g `number` Green color
  * @param {number} b `number` Blue color
  * @return {boolean} Hex `string` Hex color
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertRGBToHex | Recipebook `convertRGBToHex`}
  * @example OU.convertRGBToHex(255, 255, 255) // Return "#ffffff"
  */
 const convertRGBToHex = (r: number, g: number, b: number): string => {

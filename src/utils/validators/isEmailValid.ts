@@ -3,6 +3,7 @@
  *
  * @param {string} email `string` Email
  * @return {boolean} true/false `boolean`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#isEmailValid | Recipebook `isEmailValid`}
  * @example
  * OU.isEmailValid("name@domain.com") // Return true
  * OU.isEmailValid("name#domain.com") // Return false

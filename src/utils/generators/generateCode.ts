@@ -7,6 +7,7 @@
  * @param {boolean} onlyLetters `boolean` Activate if the code should only have letters
  * @param {boolean} uppercaseLetters `boolean` Activate if the code should only have uppercase letters
  * @return {string} code `string`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#generateCode | Recipebook `generateCode`}
  * @example 
  * OU.generateCode(10, 2, true) // Return format "40911-84142"
  * OU.generateCode(8, 4) // Return format "40LW-6MD6"

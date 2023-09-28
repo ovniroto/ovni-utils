@@ -1,4 +1,4 @@
-import { Lang } from '@types'
+type Lang = 'es-ES' | 'en-EN'
 
 export const time = (lang: Lang, plural = false) => {
     if(lang == 'es-ES') return {

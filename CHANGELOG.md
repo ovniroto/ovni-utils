@@ -1,5 +1,17 @@
 # Changelog
 
+### 0.5.0
+
+Release 28 sep 2023
+
+  * Add [`isCodeValid`](https://github.com/ovniroto/ovni-utils/wiki/Recipebook#isCodeValid) to `validators` related utils
+
+### 0.4.10
+
+Release 28 sep 2023
+
+  * Fix `convertDateToTimestamp`
+
 ### 0.4.9
 
 Release 28 sep 2023

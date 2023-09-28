@@ -1,11 +1,14 @@
+type base64Data = { type: string, extension: string, data: string }
+
 /**
  * Extract information of base64 file data
  *
  * @param {string} base64 `string` - base64 file data
  * @return {object} `object` { type: string, extension: string, data: string }
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertBase64Data | Recipebook `convertBase64Data`}
  * @example OU.extractBase64Data("data:image/jpeg;base64,/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...") // Return { type: 'jpg', extension: 'jpg', data: '/9j/4RQKRXhpZgAATU0AKgAAAAgADAEAAAMAAA...' }
  */
-const convertBase64Data = (base64: string): { type: string, extension: string, data: string } => {
+const convertBase64Data = (base64: string): base64Data => {
 
     const split = base64.split(',')
     const type = split[0].replace('data:', '')

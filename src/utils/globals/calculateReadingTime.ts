@@ -1,6 +1,7 @@
 import { getConfig } from '@config'
 import { time } from '@language/time'
-import { Lang } from '@types'
+
+type Lang = 'es-ES' | 'en-EN'
 
 const config = getConfig()
 
@@ -9,6 +10,7 @@ const config = getConfig()
  *
  * @param {string} text `string` Text you want to calculate
  * @return {number} Time `string` Time. Example: 4.5 minutes
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#calculateReadingTime | Recipebook `calculateReadingTime`}
  * @example OU.calculateReadingTime("Lorem ipsum dolor sit amet, consectetur adipiscing elit...") // Return "less than a minute"
  */
 const calculateReadingTime = (text: any): string => {

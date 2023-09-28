@@ -1,4 +1,4 @@
-import { AllowedPasswordValues } from '@types'
+type AllowedPasswordValues = 'alphabet' | 'digits' | 'symbols'
 
 /**
  * Checks if password is valid
@@ -6,14 +6,15 @@ import { AllowedPasswordValues } from '@types'
  * @param {string} password `string` Password
  * @param {number} minLength `number` Minimum length
  * @param {number} maxLength `number` Maximum length
- * @param {Array[string]} charactersRequired `array[string]` Characters required. Allowed values: ['alphabet','digits','symbols']
+ * @param {Array[string]} charactersRequired `array[string]` Characters required. Allowed values: `alphabet`, `digits`, `symbols`
  * @return {boolean} true/false `boolean`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#isPasswordValid | Recipebook `isPasswordValid`}
  * @example
  * OU.isPasswordValid("R@ndomP@ss*1234", 3, 30, ['alphabet','digits','symbols']) // Return true
  * OU.isPasswordValid("RandomPass1234", 3, 30, ['alphabet']) // Return false
  * OU.isPasswordValid("1234", 3, 30, ['alphabet']) // Return false
  */
-const isPasswordValid = (password: string, minLength = 3, maxLength = 30, charactersRequired: AllowedPasswordValues[] = []): boolean => {
+const isPasswordValid = (password: string, minLength: number = 3, maxLength: number = 30, charactersRequired: AllowedPasswordValues[] = []): boolean => {
 
     let charactersRegexp = ''
 

@@ -5,9 +5,10 @@
  * @param {string} separator `string` Example: "/"
  * @param {boolean} includeTime `boolean` Example: true
  * @return {string} date `string` Example: "22/09/2023 18:00"
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertTimestampToDate | Recipebook `convertTimestampToDate`}
  * @example OU.convertTimestampToDate(1695398400) // Return "22/09/2023 18:00"
  */
-const convertTimestampToDate = (timestamp: number, separator = "-", includeTime = false): string => {
+const convertTimestampToDate = (timestamp: number, separator: string = "-", includeTime: boolean = false): string => {
 
     let time = ''
 

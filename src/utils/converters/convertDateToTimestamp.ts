@@ -4,6 +4,7 @@
  * @param {string} date `string` Date in format "DD-MM-YYYY" or "DD/MM/YYYY"
  * @param {string} time `string` Time in format "HH:MM"
  * @return {number} timestamp `number`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#convertDateToTimestamp | Recipebook `convertDateToTimestamp`}
  * @example OU.convertDateToTimestamp("22/09/2023","18:00") // Return 1695398400
  */
 const convertDateToTimestamp = (date: string, time?: string): number => {
@@ -28,4 +29,5 @@ const convertDateToTimestamp = (date: string, time?: string): number => {
     return timestamp / 1000
 
 }
+
 export default convertDateToTimestamp

@@ -3,6 +3,7 @@
  *
  * @param {format} bytes `number` Bytes of a file or something
  * @return {string} Bytes formatted `string`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#formatBytes | Recipebook `formatBytes`}
  * @example OU.formatBytes(5232000) // Return "4.99 MB"
  */
 const formatBytes = (bytes: number, decimals = 2): string => {

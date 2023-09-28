@@ -1,3 +1,4 @@
+import { dts } from "rollup-plugin-dts"
 const typescript = require('@rollup/plugin-typescript');
 const terser = require('@rollup/plugin-terser');
 const nodeResolve = require('@rollup/plugin-node-resolve');
@@ -26,7 +27,7 @@ if(process.env.NODE_ENV === 'cjs') {
 	config.output = {
 		file: `${dist}/${bundleName}.cjs.js`,
 		format: 'cjs',
-		banner: banner,
+		banner: banner
 	}
 }
 
@@ -35,7 +36,7 @@ if(process.env.NODE_ENV === 'umd') {
 		file: `${dist}/${bundleName}.umd.js`,
 		format: 'umd',
 		name: 'OU',
-		banner: banner,
+		banner: banner
 	}
 }
 
@@ -43,7 +44,7 @@ if(process.env.NODE_ENV === 'esm') {
 	config.output = {
 		file: `${dist}/${bundleName}.esm.js`,
 		format: 'esm',
-		banner: banner,
+		banner: banner
 	}
 }
 
@@ -51,10 +52,20 @@ if(process.env.NODE_ENV === 'minify') {
 	config.output = {
 		file: `${dist}/${bundleName}.min.js`,
 		format: 'iife',
-		name: 'OU',
+		name: 'OU'
 	}
 	config.plugins.push(nodeResolve({ browser: true }));
 	config.plugins.push(terser({}));
+}
+
+if(process.env.NODE_ENV === 'types') {
+	config.input = './dist/dts/index.d.ts',
+	config.output = {
+		file: `${dist}/${bundleName}.d.ts`,
+		format: 'es',
+		banner: banner
+	}
+    config.plugins = [dts()]
 }
 
 export default config;

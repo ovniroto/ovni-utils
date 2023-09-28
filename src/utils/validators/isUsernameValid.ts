@@ -1,4 +1,4 @@
-import { AllowedUsernameValues } from '@types'
+type AllowedUsernameValues = 'a-z' | 'A-Z' | '0-9' | '_' | '-' | '.'
 
 /**
  * Checks if username is valid
@@ -8,6 +8,7 @@ import { AllowedUsernameValues } from '@types'
  * @param {number} maxLength `number` Maximum length
  * @param {Array[string]} charactersAllowed `array[string]` Characters allowed. Allowed values: ['a-z','A-Z','0-9','_']
  * @return {boolean} true/false `boolean`
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#isUsernameValid | Recipebook `isUsernameValid`}
  * @example
  * OU.isUsernameValid("username", 3, 20, ['az','AZ','09','_']) // Return true
  * OU.isUsernameValid("user.name", 3, 20, ['az','AZ','09','_']) // Return false

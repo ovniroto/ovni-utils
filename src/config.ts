@@ -1,6 +1,8 @@
 import { i18n } from 'dateformat'
 import { dayNames, monthNames, timeNames } from '@language/dateformat'
-import { Config } from '@types'
+
+type Lang = 'es-ES' | 'en-EN'
+type Config = { language: Lang }
 
 const config = {
     language: 'en-US'

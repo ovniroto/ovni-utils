@@ -3,6 +3,7 @@
  *
  * @param {string} text `string` Text you want to check
  * @return {boolean} true/false `boolean` Returns true or false depending on whether the text contains digits or not
+ * @link {@link https://github.com/ovniroto/ovni-utils/wiki/Recipebook#containDigits | Recipebook `containDigits`}
  * @example
  * OU.containDigits("Area51") // Return true
  * OU.containDigits("ovni") // Return false
