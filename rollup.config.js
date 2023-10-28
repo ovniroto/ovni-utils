@@ -3,8 +3,9 @@ const typescript = require('@rollup/plugin-typescript');
 const terser = require('@rollup/plugin-terser');
 const nodeResolve = require('@rollup/plugin-node-resolve');
 
-const dist = 'dist'
-const bundleName = 'ovniutils'
+const dist = 'dist';
+const bundleName = 'ovniutils';
+const buildDate = new Date().toISOString();
 
 const banner = '/*\n'
 	+ ' *\n'
@@ -13,6 +14,8 @@ const banner = '/*\n'
 	+ ' *\n'
 	+ ' *  (c) ' + new Date().getFullYear() + ' Lucas O. S.\n'
 	+ ' *  OvniUtils may be freely distributed under the MIT license.\n'
+	+ ' *\n'
+	+ ' *  Built on ' + buildDate + '\n'
 	+ ' *\n'
 	+ '*/\n';
 
@@ -61,7 +64,7 @@ if(process.env.NODE_ENV === 'minify') {
 if(process.env.NODE_ENV === 'types') {
 	config.input = './dist/dts/index.d.ts',
 	config.output = {
-		file: `${dist}/${bundleName}.d.ts`,
+		file: `${dist}/types.d.ts`,
 		format: 'es',
 		banner: banner
 	}

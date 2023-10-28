@@ -1,10 +1,12 @@
 /*
  *
- *  OvniUtils v0.5.0
+ *  OvniUtils v0.5.1
  *  https://github.com/ovniroto/ovni-utils
  *
  *  (c) 2023 Lucas O. S.
  *  OvniUtils may be freely distributed under the MIT license.
+ *
+ *  Built on 2023-09-29T16:49:27.592Z
  *
 */
 
